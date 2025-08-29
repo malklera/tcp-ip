@@ -90,3 +90,7 @@ if [ -d "$HOME_DIR/forArch/.bashrc" ]; then
 else
     log_error "$HOME_DIR/forArch/.bashrc not found. Bash configs not copied."
 fi
+
+# Allow copy-paste between vm and main machine
+log_info "Installing spice-vdagent(copy-paste)..."
+pacman -S --needed --noconfirm spice-vdagent || log_error "Failed to install spice-vdagent."
