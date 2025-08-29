@@ -1,3 +1,27 @@
+#!/bin/bash
+
+# This script assumes you are running it from your home directory.
+
+#  Configuration Variables 
+GIT_USERNAME="user1"
+
+# Helper Functions for Logging
+log_info() {
+    echo -e "\e[34m[INFO]\e[0m $1" # Blue
+}
+
+log_success() {
+    echo -e "\e[32m[SUCCESS]\e[0m $1" # Green
+}
+
+log_error() {
+    echo -e "\e[31m[ERROR]\e[0m $1" # Red
+}
+
+log_warning() {
+    echo -e "\e[33m[WARNING]\e[0m $1" # Yellow
+}
+
 # Check if running as root
 if [[ $EUID -ne 0 ]]; then
    log_error "This script must be run as root. Please use 'sudo ./setArch.sh'"
@@ -15,12 +39,6 @@ log_info "Starting Arch Linux setup script for user: $ORIGINAL_USER..."
 log_info "Updating system packages..."
 pacman -Syu --noconfirm || log_error "Failed to update system."
 
-# Network Manager
-log_info "Installing and enabling NetworkManager..."
-pacman -S --needed --noconfirm networkmanager || log_error "Failed to install networkmanager."
-pacman -S --needed --noconfirm network-manager-applet || log_error "Failed to install network-manager-applet."
-systemctl enable NetworkManager.service || log_error "Failed to enable NetworkManager.service."
-
 # Set up SSH
 log_info "Setting up OpenSSH..."
 pacman -S --needed --noconfirm openssh || log_error "Failed to install openssh."
@@ -32,7 +50,6 @@ pacman -S --needed --noconfirm git || log_error "Failed to install git."
 # Configure Git for the original user
 sudo -u "$ORIGINAL_USER" git config --global user.name "$GIT_USERNAME"
 sudo -u "$ORIGINAL_USER" git config --global init.defaultBranch main
-
 
 # Get backup configs (tcp-ip repository)
 log_info "Attempting to clone 'tcp-ip' repository..."
@@ -50,6 +67,10 @@ if [ -f "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom" ]; then
 else
     log_error "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom not found. Keyboard layout not changed."
 fi
+
+# Go
+log_info "Installing Go..."
+pacman -S --needed --noconfirm go || log_error "Failed to install Go."
 
 # AUR helper (yay)
 log_info "Setting up Yay (AUR helper)..."
@@ -75,22 +96,32 @@ sudo rm -r "$HOME_DIR/yay" || log_error "Failed to remove yay build directory."
 log_success "Yay installed and configured."
 
 # Text editors
-log_info "Installing Vim and Neovim dependencies..."
+log_info "Installing Vim..."
 pacman -S --needed --noconfirm vim || log_error "Failed to install vim."
+
+# Copy paste from vm
+log_info "Installing spice-vdagent..."
+pacman -S --needed --noconfirm spice-vdagent || log_error "Failed to install vdagent."
 
 # Basics
 log_info "Installing basic utilities (man, curl, wget, unzip, tldr)..."
 pacman -S --needed --noconfirm man || log_error "Failed to install man."
 pacman -S --needed --noconfirm tldr || log_error "Failed to install tldr"
+pacman -S --needed --noconfirm unzip || log_error "Failed to install unzip"
+pacman -S --needed --noconfirm inetutils || log_error "Failed to install inetutils"
 
 # Copy bash backup files
-if [ -d "$HOME_DIR/forArch/.bashrc" ]; then
-    sudo -u "$ORIGINAL_USER" cp "$HOME_DIR/forArch/.bashrc" "$HOME_DIR/" || log_error "Failed to copy .bashrrc."
+if [ -d "$HOME_DIR/tcp-ip/.bashrc" ]; then
+    sudo -u "$ORIGINAL_USER" cp "$HOME_DIR/tcp-ip/.bashrc" "$HOME_DIR/" || log_error "Failed to copy .bashrrc."
     log_success "Bash configurations copied for $ORIGINAL_USER."
 else
-    log_error "$HOME_DIR/forArch/.bashrc not found. Bash configs not copied."
+    log_error "$HOME_DIR/tcp-ip/.bashrc not found. Bash configs not copied."
 fi
 
-# Allow copy-paste between vm and main machine
-log_info "Installing spice-vdagent(copy-paste)..."
-pacman -S --needed --noconfirm spice-vdagent || log_error "Failed to install spice-vdagent."
+log_info "Copying .bash_profile..."
+if [ -f "$HOME_DIR/tcp-ip/.bash_profile" ]; then
+    sudo -u "$ORIGINAL_USER" cp "$HOME_DIR/tcp-ip/.bash_profile" "$HOME_DIR/" || log_error "Failed to copy .bash_profile."
+    log_success ".zprofile copied for $ORIGINAL_USER."
+else
+    log_error "$HOME_DIR/tcp-ip/.bash_profile not found. .bash_profile not copied."
+fi

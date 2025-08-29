@@ -26,20 +26,20 @@ Where the values are not reemplaced by the above table, either I do not cach it 
 I used [quickemu] to set up my VMs, but it may have been easer to use [qemu] directly for the dependencies problems I have to dealt with, but I disgress.
 
 - Install [qemu].
-- Build [quickemu] from source, I have a problem with the package being an old version.
+- Install [quickemu], I have a problem with the package being an old version, so I have to build it from source.
 > If you are building from source, you will have to download/build the dependencies, depending of where you are using it from.
 
 **System where the new commands where used**
 I created two VMs with quickemu
 
-For linux system I choose a minimal install of Arch
+For linux system I choose a Arch+KDE
 
-`$ uname -a`
-``
+```$ uname -a```
+``` ```
 
-For Windows I choose Windows 10
+For Windows I choose Windows 11
 
-``
+``` ```
 
 I will not look for tools for MacOs because I do not think I will ever touch one.
 
@@ -70,6 +70,6 @@ eth1      Link encap:Ethernet  HWaddr 00:30:48:2A:19:89
 
 ```
 
-[//]:
+[//]: #(Used links)
 [qemu]: <https://www.qemu.org>
 [quickemu]: <https://github.com/quickemu-project/quickemu>

@@ -4,14 +4,14 @@ This is not a guide, this is for my future self, or for when I end up nuking the
 
 - Inmediatly after finishing installing Arch and rebooting I have to do this.
 
-`$ curl -o setArch.sh https://raw.githubusercontent.com/malklera/tcp-ip/refs/heads/main/setArch.sh`
+```$ curl -o setArch.sh https://raw.githubusercontent.com/malklera/tcp-ip/refs/heads/main/setArch.sh```
 
 Make the file executable
 
-`$ chmod +x setArch.sh`
+```$ chmod +x setArch.sh```
 
 Run the script
 
-`$ sudo ./setArch.sh`
+```$ sudo ./setArch.sh```
 
 Once everything finished, reboot
