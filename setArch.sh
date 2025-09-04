@@ -39,10 +39,6 @@ log_info "Starting Arch Linux setup script for user: $ORIGINAL_USER..."
 log_info "Updating system packages..."
 pacman -Syu --noconfirm || log_error "Failed to update system."
 
-# Set up SSH
-log_info "Setting up OpenSSH..."
-pacman -S --needed --noconfirm openssh || log_error "Failed to install openssh."
-
 # Git
 log_info "Installing Git and configuring global settings..."
 pacman -S --needed --noconfirm git || log_error "Failed to install git."
@@ -61,11 +57,15 @@ fi
 
 # Change keyboard layout
 log_info "Copying custom keyboard layout and setting it..."
-if [ -f "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom" ]; then
-    cp "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom" /usr/share/xkeyboard-config-2/symbols/ || log_error "Failed to copy custom keyboard layout."
-    log_success "Custom keyboard layout copied."
+if [ -f "/usr/share/xkeyboard-config-2/symbols/" ]]; then
+    if [ -f "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom" ]; then
+        cp "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom" /usr/share/xkeyboard-config-2/symbols/ || log_error "Failed to copy custom keyboard layout."
+        log_success "Custom keyboard layout copied."
+    else
+        log_error "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom not found. Keyboard layout not changed."
+    fi
 else
-    log_error "$HOME_DIR/tcp-ip/assets/keyboardLayout/custom not found. Keyboard layout not changed."
+    log_error "/usr/share/xkeyboard-config-2/symbols/ do not exist, copy keyboard manually"
 fi
 
 # Go
@@ -95,10 +95,6 @@ log_info "Cleaning up yay build directory..."
 sudo rm -r "$HOME_DIR/yay" || log_error "Failed to remove yay build directory."
 log_success "Yay installed and configured."
 
-# Text editors
-log_info "Installing Vim..."
-pacman -S --needed --noconfirm vim || log_error "Failed to install vim."
-
 # Copy paste from vm
 log_info "Installing spice-vdagent..."
 pacman -S --needed --noconfirm spice-vdagent || log_error "Failed to install vdagent."
@@ -116,12 +112,4 @@ if [ -d "$HOME_DIR/tcp-ip/.bashrc" ]; then
     log_success "Bash configurations copied for $ORIGINAL_USER."
 else
     log_error "$HOME_DIR/tcp-ip/.bashrc not found. Bash configs not copied."
-fi
-
-log_info "Copying .bash_profile..."
-if [ -f "$HOME_DIR/tcp-ip/.bash_profile" ]; then
-    sudo -u "$ORIGINAL_USER" cp "$HOME_DIR/tcp-ip/.bash_profile" "$HOME_DIR/" || log_error "Failed to copy .bash_profile."
-    log_success ".zprofile copied for $ORIGINAL_USER."
-else
-    log_error "$HOME_DIR/tcp-ip/.bash_profile not found. .bash_profile not copied."
 fi

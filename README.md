@@ -23,7 +23,7 @@ Where the values are not reemplaced by the above table, either I do not cach it 
 
 ## Preparation
 
-I used [quickemu] to set up my VMs, but it may have been easer to use [qemu] directly for the dependencies problems I have to dealt with, but I disgress.
+I used [quickemu](https://github.com/quickemu-project/quickemu) to set up my VMs, but it may have been easer to use [qemu](https://www.qemu.org) directly for the dependencies problems I have to dealt with, but I disgress.
 
 - Install [qemu].
 - Install [quickemu], I have a problem with the package being an old version, so I have to build it from source.
@@ -32,10 +32,10 @@ I used [quickemu] to set up my VMs, but it may have been easer to use [qemu] dir
 **System where the new commands where used**
 I created two VMs with quickemu
 
-For linux system I choose a Arch+KDE
+For linux system I choose a minimal archlinux install
 
 ```$ uname -a```
-``` ```
+`` ```
 
 For Windows I choose Windows 11
 
@@ -69,7 +69,14 @@ eth1      Link encap:Ethernet  HWaddr 00:30:48:2A:19:89
 ```
 
 ```
+1: lo: is for loopback, I suposse someday I will learn what is for, for now, ignore that
 
-[//]: #(Used links)
-[qemu]: <https://www.qemu.org>
-[quickemu]: <https://github.com/quickemu-project/quickemu>
+2: : is my actual ethernet connection
+ is autogenerate following the [pnidn](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/networking_guide/sec-understanding_the_predictable_network_interface_device_names) standart? it is compose by
+type_interface  p\<Bus number\> s\<Slot number\>
+
+You can see the result of the mapping of link/ether address to IPv6 address
+> link/ether 
+> inet6 
+
+Yet to understand how and why would you do that
