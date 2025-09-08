@@ -76,21 +76,3 @@ $ sudo systemctl enable --now sshd
 <port> Its part of the command output from quickemu, it says something like this
 
 > - ssh:      On host:  ssh user@localhost -p <port>
-
-Once you have connected to the **VM** run the following
-
-```$ curl -o setArch.sh https://raw.githubusercontent.com/malklera/tcp-ip/refs/heads/main/setArch.sh```
-
-Make the file executable
-
-```$ chmod +x setArch.sh```
-
-Run the script
-
-```$ sudo ./setArch.sh```
-
-Once everything is installed.
-
-```$ reboot```
-
-
