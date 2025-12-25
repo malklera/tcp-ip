@@ -34,7 +34,7 @@ I created two VMs with quickemu
 
 For linux system I choose a minimal archlinux install
 
-```
+```sh
 linux$ uname -a
 Linux archvm 6.16.4-arch1-1 #1 SMP PREEMPT_DYNAMIC Thu, 28 Aug 2025 19:49:53 +0000 x86_64 GNU/Linux
 ```
@@ -48,12 +48,12 @@ I will not look for tools for MacOs because I do not think I will ever touch one
 
 ~~If you use a system where this tools are not available, I do not care, good luck. And not, this document is not an excuse to say that I use Arch btw~~
 
-## 2. The Internet Address Architecture
+# 2. The Internet Address Architecture
 2.3. Basic IP Address Structure
 2.3.6. IPv6 Addresses and Interface Identifiers
 2.3.6.1. Examples
 
-```
+```sh
 Linux% ifconfig
 Linux% ifconfig eth1
 eth1      Link encap:Ethernet  HWaddr 00:30:48:2A:19:89
@@ -68,7 +68,7 @@ eth1      Link encap:Ethernet  HWaddr 00:30:48:2A:19:89
           Base address:0x3040 Memory:f8220000-f8240000
 ```
 
-```
+```sh
 linux$ ip address
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -99,10 +99,10 @@ You can see the result of the mapping of link/ether address to IPv6 address
 
 Yet to understand how and why would you do that
 
-### 2.7. Unicast Address Assignment
-2.7.1. Single Provider/No Network/Single Address
+## 2.7. Unicast Address Assignment
+### 2.7.1. Single Provider/No Network/Single Address
 
-```
+```sh
 Linux% ifconfig ppp0
 ppp0      Link encap:Point-to-Point Protocol
           inet addr:71.141.244.213
@@ -123,7 +123,7 @@ ppp0            1      224.0.0.1
 lo              1      ff02::1
 ```
 
-```
+```sh
 linux$ ip address show enp0s9
 2: enp0s9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
     link/ether hh:hh:hh:hh:hh:hh brd ff:ff:ff:ff:ff:ff
@@ -161,4 +161,43 @@ linux$ ip maddress show
         inet6 ff01::1
 ```
 
-## 3. Link Layer
+# 3. Link Layer
+### 3.2.3. 802.1p/q: Virtual LANs and QoS Tagging
+
+```sh
+Linux% vconfig add eth1 2
+Added VLAN with VID == 2 to IF -:eth1:-
+Linux% ifconfig eth1.2
+eth1.2 Link encap:Ethernet HWaddr 00:04:5A:9F:9E:80
+            BROADCAST MULTICAST MTU:1500 Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0
+            RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+Linux% vconfig rem eth1.2
+Removed VLAN -:eth1.2:-
+Linux% vconfig set_name_type VLAN_PLUS_VID
+Set name-type for VLAN subsystem. Should be visible in
+            /proc/net/vlan/config
+Linux% vconfig add eth1 2
+Added VLAN with VID == 2 to IF -:eth1:-
+Linux% ifconfig vlan0002
+vlan0002 Link encap:Ethernet HWaddr 00:04:5A:9F:9E:80
+            BROADCAST MULTICAST MTU:1500 Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0
+            RX bytes:0 (0.0 b) TX bytes:0 (0.0 b)
+```
+
+
+```sh
+linux$ sudo ip link add link enp0s9 name descriptiveName type vlan id 1
+linux$ ip -d address show descriptiveName
+3: descriptiveName@enp0s9: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether hh:hh:hh:hh:hh:hh brd ff:ff:ff:ff:ff:ff promiscuity 0 allmulti 0 minmtu 0 maxmtu 65535
+    vlan protocol 802.1Q id 1 <REORDER_HDR> numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536
+linux$ sudo ip link delete descriptiveName
+```
+
+It is not recommended to create VLAN interfaces automatically, there is not a built in command for that.

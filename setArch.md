@@ -12,29 +12,29 @@ To install quickemu I cloned the repo because of a bug on the arch package(old v
 
 Install dependencies
 
-```
-$ sudo pacman -S --needed --noconfirm qemu bash coreutils curl edk2-aarch64 edk2-arm edk2-ovmf gawk grep mesa-utils jq pciutils libprocps python cdrtools usbutils util-linux sed socat spice-gtk swtpm xdg-user-dirs libxrandr zsync unzip
+```sh
+sudo pacman -S --needed --noconfirm qemu bash coreutils curl edk2-aarch64 edk2-arm edk2-ovmf gawk grep mesa-utils jq pciutils libprocps python cdrtools usbutils util-linux sed socat spice-gtk swtpm xdg-user-dirs libxrandr zsync unzip
 ```
 
 Make the .local/bin directory if you do not have it, clone the repo, create symlinks to both binaries used
 
-```
-$ mkdir ~/.local/bin
-$ git clone --filter=blob:none https://github.com/quickemu-project/quickemu
-$ cd quickemu
-$ ln -s quickemu ~/.local/bin/quickemu
-$ ln -s quickget ~/.local/bin/quickget
+```sh
+mkdir ~/.local/bin
+git clone --filter=blob:none https://github.com/quickemu-project/quickemu
+cd quickemu
+ln -s quickemu ~/.local/bin/quickemu
+ln -s quickget ~/.local/bin/quickget
 ```
 
 Download an Arch image.
 
-```
-$ quickget archlinux latest
+```sh
+quickget archlinux latest
 ```
 
 Use this config for the **VM**
 
-```
+```sh
 #!/home/<user>/.local/bin/quickemu --vm
 vmname="name of vm(what you prefer)"
 guest_os="linux"
@@ -49,8 +49,8 @@ ssh_port="2225"
 
 To open the **VM**
 
-```
-$ quickemu --vm <name-vm>.conf
+```sh
+quickemu --vm <name-vm>.conf
 ```
 
 Install the OS
@@ -59,17 +59,21 @@ Install the OS
 
 **VM**
 
-```
-$ sudo pacman -S openssh
-$ sudo systemctl enable --now sshd
+```sh
+sudo pacman -S openssh
+sudo systemctl enable --now sshd
 ```
 
-```$ whoami```
+```sh
+whoami
+```
 
 
 **Host**
 
-```$ ssh -p <vmUser>@localhost <port>```
+```sh
+ssh -p <vmUser>@localhost <port>
+```
 
 <vmUser> is the user name from the **VM**
 
