@@ -69,9 +69,12 @@
 - CRC : Cyclic Redundancy Check
 - IGP : Inter-Package Gap
 - ISL : Inter-Switch Link
+- LACP : Link Agregation Control Protocol
+- NICs : Network Interface Card
 
 
 # 1. Introduction
+
 ### 1.3.2. Multiplexing, Demultiplexing, and Encapsulation in TCP/IP
 
 Arriving Ethernet frame contains
@@ -85,6 +88,7 @@ Arriving Ethernet frame contains
 
 
 ### 1.3.3. Port Numbers
+
 Port numbers are 16-bit nonnegative integers (range 0–65535)
 Well-know:       0-1023
 Registered:      1024-49151
@@ -107,18 +111,21 @@ Dynamic/Private: 49152-65535
 ## 2.2. Expressing IP Addresses
 
 **IPv4.**
+
 32 bit nonnegative integer
 0 - 4 294 967 296 (2^32)
 But is represented this way
 [0-255].[0-255].[0-255].[0-255]
 
 **IPv6**
+
 128 bit nonnegative integer
 0 - 3.402 823 669 × 10^38 (2^128)
 But represented on hex
 [0 - ffff]:[0 - ffff]:[0 - ffff]:[0 - ffff]:[0 - ffff]:[0 - ffff]:[0 - ffff]:[0 - ffff]
 
 **With this rules:**
+
 1. Leading zeros of a block need not be written.
 2. Blocks of all zeros can be omitted and replaced by the notation ::
 For example, the IPv6 address 0:0:0:0:0:0:0:1 can be written more compactly as ::1
@@ -146,10 +153,13 @@ zeros, the first is replaced with ::
 
 When using IPv6 on combination with HTTP protocol, you have to surround the ipv6 address on [] so that the colon from the
 address is not confuse with the colon from the HTTP protocol
+
 Example:
+
 http://[2001:0db8:85a3:08d3:1319:8a2e:0370:7344]:443/
 
-**2.3. Basic IP Address Structure**
+## 2.3. Basic IP Address Structure
+
 ### 2.3.1. Classful Addressing
 
 What determines the class is the first block of the address 0-255.0-255.0-255.0-255

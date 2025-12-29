@@ -201,3 +201,15 @@ linux$ sudo ip link delete descriptiveName
 ```
 
 It is not recommended to create VLAN interfaces automatically, there is not a built in command for that.
+
+### 3.2.4. 802.1AX: Link Aggregation (Formerly 802.3ad)
+
+```sh
+Linux% modprobe bonding
+Linux% ifconfig bond0 10.0.0.111 netmask 255.255.255.128
+Linux% ifenslave bond0 eth0 wlan0
+```
+
+```sh
+linux$ 
+```

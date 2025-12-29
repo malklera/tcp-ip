@@ -21,30 +21,21 @@ Make the .local/bin directory if you do not have it, clone the repo, create syml
 ```sh
 mkdir ~/.local/bin
 git clone --filter=blob:none https://github.com/quickemu-project/quickemu
-cd quickemu
-ln -s quickemu ~/.local/bin/quickemu
-ln -s quickget ~/.local/bin/quickget
+ln -s quickemu/quickemu ~/.local/bin/quickemu
+ln -s quickemu/quickget ~/.local/bin/quickget
 ```
 
-Download an Arch image.
+Download an Arch image, I have problems running the command outside of the HOME
+directory, may check it later.
 
 ```sh
 quickget archlinux latest
 ```
 
-Use this config for the **VM**
+Open the .conf file generate by quickget and add this line at the end.
 
-```sh
-#!/home/<user>/.local/bin/quickemu --vm
-vmname="name of vm(what you prefer)"
-guest_os="linux"
-# <directory-name> can be custom or the default
-disk_img="<directory-name>/disk.qcow2"
-iso="archlinux-latest/archlinux-2025.08.01-x86_64.iso"
-# this is to be able to copy from host to guest, I could not copy from guest to host
-display="spice"
-# if you want to connect from host to guest, for example with ssh
-ssh_port="2225"
+```
+extra_args="-device virtio-net,netdev=mgmt -netdev user,id=mgmt,net=10.0.4.0/24,hostfwd=tcp::22221-:22"
 ```
 
 To open the **VM**
@@ -53,20 +44,81 @@ To open the **VM**
 quickemu --vm <name-vm>.conf
 ```
 
-Install the OS
+Install the OS, I choose a minimal server type install where only ssh is installed.
 
-- Inmediatly after finishing installing Arch and rebooting I have to do this.
+Inmediatly after finishing installing Arch and rebooting I have to do this.
+
+```sh
+sudo pacman -S --needed --noconfirm vim
+```
 
 **VM**
 
-```sh
-sudo pacman -S openssh
-sudo systemctl enable --now sshd
-```
+Now the important part, we will be making several network changes, since i will
+be connected from Host to Guest with SSH, if I change the network config I may
+loose the connection, to prevent that we have the extra_args on the VM config file,
+that give use a second connection to the VM, the connection created by default by
+quickemu will be our "testing" connection, all examples will be run with that one,
+the one we added will be our "secure" connection, when we mess up the testing connection
+we can fix it using the secure connection.
+
+Identify the available connections.
 
 ```sh
-whoami
+ip addr
 ```
+
+We know the secure ip because we added manually.
+
+Secure.
+
+```
+inet 10.0.4.15/24
+port 22221
+```
+
+Create a file like this <number>-<descriptive name>.network, the number is the
+priority at which systemd will apply the configs, the descriptive name is purelly
+for he human administrator, .network is the file type.
+
+```
+sudo vim /etc/systemd/network/10-mgmt.network
+```
+
+Inside that file will be put this, where <name connection> is the name asigne to
+the connection we created, the one with address "10.0.4.15/24" given by ```ip addr```
+
+```
+[Match]
+Name=<name connection>
+
+[Network]
+DHCP=yes
+
+[DHCPv4]
+UseRoutes=false
+```
+
+Check which program is managing the network.
+
+```sh
+ps aux | grep -Ei 'NetworkManager|systemd-networkd|dhcpcd|connman|wicked'
+```
+
+If needed disable with.
+
+```sh
+sudo systemctl disable --now <name-process>
+```
+
+And if needed activated systemd-networkd.
+
+```sh
+sudo systemctl enable --now systemd-networkd
+```
+
+The testing one is generated, so the other connection that is not loopback is
+the one we will be using.
 
 
 **Host**
@@ -80,3 +132,6 @@ ssh -p <vmUser>@localhost <port>
 <port> Its part of the command output from quickemu, it says something like this
 
 > - ssh:      On host:  ssh user@localhost -p <port>
+
+# Tools to use on the VM
+## 
