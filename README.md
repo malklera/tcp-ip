@@ -8,12 +8,12 @@ I will only indicate Chapter and specific section where the command is used, sho
 
 Below the example from the book will be a example run on a VM system at the moment I do it, the output of the commands will be sanitice and this is the convention to follow.
 
-| Output | Placeholder |
-| - | - |
-| Binary digit | b |
-| Decimal digit | d |
-| Hexadecimal digit | h |
-| Letter | l |
+| Output            | Placeholder
+| -                 | -
+| Binary digit      | b
+| Decimal digit     | d
+| Hexadecimal digit | h
+| Letter            | l
 
 On your own system the output of the commands will follow the same structure (I think) but the actual values will be different.
 
@@ -211,5 +211,46 @@ Linux% ifenslave bond0 eth0 wlan0
 ```
 
 ```sh
-linux$ 
+linux$ sudo modprobe bonding
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s8
+       valid_lft 85689sec preferred_lft 85689sec
+    inet6 fec0::5054:ff:fe12:3456/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86268sec preferred_lft 14268sec
+    inet6 fe80::5054:ff:fe12:3456/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 85688sec preferred_lft 85688sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86134sec preferred_lft 14134sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft foreve
+linux$ sudo ip link add bond0 type bond mode active-backup
+linux$ sudo ip link set enp0s8 down
+linux$ sudo ip link set enp0s8 master bond0
+# The following command is just to dealt with a qemu related problem regarding
+# the mac addresses, for an actual machine you do not do this. This MAC address
+# is the same that is asigned to enp0s8 by default.
+linux$ sudo ip link set bond0 addr 52:54:00:12:34:56
+linux$ sudo ip addr add 10.0.2.15/24 dev bond0
+linux$ sudo ip link set bond0 up
+# Slave interfaces should not have their own address, it is inherited from the master
+linux$ sudo ip addr flush dev enp0s8
+linux$ sudo ip route add default via 10.0.2.2 dev bond0 src 10.0.2.15 metric 10
 ```
+
+## 3.3. Full Duplex, Power Save, Autonegotiation, and 802.1X Flow Control
+
+
