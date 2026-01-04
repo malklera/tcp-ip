@@ -32,10 +32,17 @@ directory, may check it later.
 quickget archlinux latest
 ```
 
-Open the .conf file generate by quickget and add this line at the end.
+Open the .conf file generate by quickget and add this at the end.
+
+The first line adds a "secure" connection, I will not touch this one on any of
+the examples.
+
+The second one adds another network connection to simulate connections between
+two networks, since I will not touch the secure one, I need another.
 
 ```
-extra_args="-device virtio-net,netdev=mgmt -netdev user,id=mgmt,net=10.0.4.0/24,hostfwd=tcp::22221-:22"
+extra_args="-device virtio-net,netdev=mgmt -netdev user,id=mgmt,net=10.0.4.0/24,hostfwd=tcp::22222-:22"
+extra_args="$extra_args -device virtio-net,netdev=wifi -netdev user,id=wifi,net=10.0.3.0/24,hostfwd=tcp::22221-:22"
 ```
 
 To open the **VM**

@@ -204,6 +204,17 @@ It is not recommended to create VLAN interfaces automatically, there is not a bu
 
 ### 3.2.4. 802.1AX: Link Aggregation (Formerly 802.3ad)
 
+For what I understang what you want is for applications to not care about what
+interface is the data going, if you change physical ethernet connector or change
+from ethernet to Wi-Fi, your MAC, IP, and other data of the interface change, if
+the application wants to connect to a specific IP, each time the interface change
+you have to change the application.
+
+If the application instead connect to a master interface, you can add, change, and
+delete slaves interfaces and the application would not care, or if you have a ethernet
+cable as the main connection, you can have a Wi-Fi as a backup, or another ethernet
+cable.
+
 ```sh
 Linux% modprobe bonding
 Linux% ifconfig bond0 10.0.0.111 netmask 255.255.255.128
@@ -248,9 +259,270 @@ linux$ sudo ip addr add 10.0.2.15/24 dev bond0
 linux$ sudo ip link set bond0 up
 # Slave interfaces should not have their own address, it is inherited from the master
 linux$ sudo ip addr flush dev enp0s8
-linux$ sudo ip route add default via 10.0.2.2 dev bond0 src 10.0.2.15 metric 10
+linux$ sudo ip route add default via 10.0.2.2 dev bond0 src 10.0.2.15 metric 100
 ```
 
 ## 3.3. Full Duplex, Power Save, Autonegotiation, and 802.1X Flow Control
 
+ethtool is still used
 
+```sh
+Linux% ethtool eth0
+Settings for eth0:
+           Supported ports: [ TP MII ]
+           Supported link modes: 10baseT/Half 10baseT/Full
+           100baseT/Half 100baseT/Full
+           Supports auto-negotiation: Yes
+           Advertised link modes: 10baseT/Half 10baseT/Full
+           100baseT/Half 100baseT/Full
+           Advertised auto-negotiation: Yes
+           Speed: 10Mb/s
+           Duplex: Half
+           Port: MII
+           PHYAD: 24
+           Transceiver: internal
+           Auto-negotiation: on
+           Current message level: 0x00000001 (1)
+           Link detected: yes
+Linux% ethtool eth1
+Settings for eth1:
+           Supported ports: [ TP ]
+           Supported link modes: 10baseT/Half 10baseT/Full
+                      100baseT/Half 100baseT/Full
+                      1000baseT/Full
+           Supports auto-negotiation: Yes
+           Advertised link modes: 10baseT/Half 10baseT/Full
+                      100baseT/Half 100baseT/Full
+                      1000baseT/Full
+           Advertised auto-negotiation: Yes
+           Speed: 100Mb/s
+           Duplex: Full
+           Port: Twisted Pair
+           PHYAD: 0
+           Transceiver: internal
+           Auto-negotiation: on
+           Supports Wake-on: umbg
+           Wake-on: g
+           Current message level: 0x00000007 (7)
+           Link detected: yes
+```
+
+On the VM this tool do not actually work. For complete information run as sudo,
+it use a part of the kernel called netlink.
+
+```sh
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s8
+       valid_lft 86058sec preferred_lft 86058sec
+    inet6 fec0::5054:ff:fe12:3456/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86060sec preferred_lft 14060sec
+    inet6 fe80::5054:ff:fe12:3456/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 86058sec preferred_lft 86058sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86385sec preferred_lft 14385sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+linux$ sudo ethtool enp0s8
+Settings for enp0s8:
+	Supported ports: [  ]
+	Supported link modes:   Not reported
+	Supported pause frame use: No
+	Supports auto-negotiation: No
+	Supported FEC modes: Not reported
+	Advertised link modes:  Not reported
+	Advertised pause frame use: No
+	Advertised auto-negotiation: No
+	Advertised FEC modes: Not reported
+	Speed: Unknown!
+	Duplex: Unknown! (255)
+	Auto-negotiation: off
+	Port: Other
+	PHYAD: 0
+	Transceiver: internal
+	Link detected: yes
+linux$ sudo ethtool enp0s11
+Settings for enp0s11:
+	Supported ports: [  ]
+	Supported link modes:   Not reported
+	Supported pause frame use: No
+	Supports auto-negotiation: No
+	Supported FEC modes: Not reported
+	Advertised link modes:  Not reported
+	Advertised pause frame use: No
+	Advertised auto-negotiation: No
+	Advertised FEC modes: Not reported
+	Speed: Unknown!
+	Duplex: Unknown! (255)
+	Auto-negotiation: off
+	Port: Other
+	PHYAD: 0
+	Transceiver: internal
+	Link detected: yes
+```
+
+### 3.3.2. Wake-on LAN (WoL), Power Saving, and Magic Packets
+
+To see what types of WoL options there are
+
+```sh
+LESS='+/^ *wol ' man ethtool
+```
+
+
+```sh
+Linux% ethtool –s eth0 wol umgb
+```
+
+WoL do not make sence on a VM, so normally is not implemented
+
+```sh
+linux$ sudo ethtool -s enp0s8 wol umbg
+netlink error: Operation not supported
+```
+
+## 3.4. Bridges and Switches
+
+```sh
+Linux% brctl addbr br0
+Linux% brctl addif br0 eth0
+Linux% brctl addif br0 eth1
+Linux% ifconfig eth0 up
+Linux% ifconfig eth1 up
+Linux% ifconfig br0 up
+```
+
+```sh
+linux$ sudo ip link add br0 type bridge
+linux$ sudo ip link set enp0s8 master br0
+linux$ sudo ip link set enp0s12 master br0
+linux$ sudo ip addr flush dev enp0s8
+linux$ sudo ip addr flush dev enp0s12
+linux$ sudo ip addr add 10.0.2.15/24 dev br0
+linux$ sudo ip link set enp0s8 up
+linux$ sudo ip link set enp0s12 up
+linux$ sudo ip link set br0 up
+linux$ sudo ip route add default via 10.0.2.2 dev br0 src 10.0.2.15 metric 100
+```
+
+```sh
+Linux% brctl show
+bridge name bridge id         STP enabled interfaces
+br0         8000.0007e914a9c1 no          eth0 eth1
+
+Linux% brctl showmacs br0
+port no mac addr is local? ageing timer
+  1 00:04:5a:9f:9e:80 no 0.79
+  2 00:07:e9:14:a9:c1 yes 0.00
+  1 00:08:74:93:c8:3c yes 0.00
+  2 00:14:22:f4:19:5f no 0.81
+  1 00:17:f2:e7:6d:91 no 2.53
+  1 00:90:f8:00:90:b7 no 17.13
+```
+
+With the first command we learn which interfaces are connected to which master.
+
+```sh
+linux$ bridge link
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
+```
+
+Then with the following we learn the type of link bridge/bridge_slave, stp_state, bridge_id
+
+```sh
+linux$ ip -d link show br0
+5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 16:a0:5e:e3:40:4b brd ff:ff:ff:ff:ff:ff promiscuity 0 allmulti 0 minmtu 68 maxmtu 65535 netns-immutable
+    bridge forward_delay 1500 hello_time 200 max_age 2000 ageing_time 30000 stp_state 0 priority 32768 vlan_filtering 0 vlan_protocol 802.1Q bridge_id 8000.16:a0:5e:e3:40:4b designated_root 8000.16:a0:5e:e3:40:4b root_port 0 root_path_cost 0 topology_change 0 topology_change_detected 0 hello_timer    0.00 tcn_timer    0.00 topology_change_timer    0.00 gc_timer  222.81 fdb_n_learned 2 fdb_max_learned 0 vlan_default_pvid 1 vlan_stats_enabled 0 vlan_stats_per_port 0 group_fwd_mask 0 group_address 01:80:c2:00:00:00 mcast_snooping 1 no_linklocal_learn 0 mcast_vlan_snooping 0 mst_enabled 0 mdb_offload_fail_notification 0 fdb_local_vlan_0 0 mcast_router 1 mcast_query_use_ifaddr 0 mcast_querier 0 mcast_hash_elasticity 16 mcast_hash_max 4096 mcast_last_member_count 2 mcast_startup_query_count 2 mcast_last_member_interval 100 mcast_membership_interval 26000 mcast_querier_interval 25500 mcast_query_interval 12500 mcast_query_response_interval 1000 mcast_startup_query_interval 3125 mcast_stats_enabled 0 mcast_igmp_version 2 mcast_mld_version 1 nf_call_iptables 0 nf_call_ip6tables 0 nf_call_arptables 0 addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536
+```
+
+On the MACs tables we see mac address(mac addr), interface(port no), used int/int(ageing timer), owner(is local?)
+
+```sh
+[user@server ~]$ bridge -s fdb
+52:55:0a:00:02:02 dev enp0s8 used 2572/105 master br0
+52:54:00:12:34:56 dev enp0s8 vlan 1 used 2662/2662 master br0 permanent
+52:54:00:12:34:56 dev enp0s8 used 2662/2662 master br0 permanent
+33:33:00:00:00:01 dev enp0s8 self permanent
+01:00:5e:00:00:01 dev enp0s8 self permanent
+01:80:c2:00:00:00 dev enp0s8 self permanent
+01:80:c2:00:00:03 dev enp0s8 self permanent
+01:80:c2:00:00:0e dev enp0s8 self permanent
+33:33:00:00:00:01 dev enp0s11 self permanent
+01:00:5e:00:00:01 dev enp0s11 self permanent
+33:33:ff:12:34:57 dev enp0s11 self permanent
+01:80:c2:00:00:00 dev enp0s11 self permanent
+01:80:c2:00:00:03 dev enp0s11 self permanent
+01:80:c2:00:00:0e dev enp0s11 self permanent
+01:00:5e:00:00:fc dev enp0s11 self permanent
+33:33:00:01:00:03 dev enp0s11 self permanent
+52:56:00:00:00:02 dev enp0s12 used 774/234 master br0
+52:54:00:12:34:58 dev enp0s12 vlan 1 used 2657/2657 master br0 permanent
+52:54:00:12:34:58 dev enp0s12 used 2657/2657 master br0 permanent
+33:33:00:00:00:01 dev enp0s12 self permanent
+01:00:5e:00:00:01 dev enp0s12 self permanent
+01:80:c2:00:00:00 dev enp0s12 self permanent
+01:80:c2:00:00:03 dev enp0s12 self permanent
+01:80:c2:00:00:0e dev enp0s12 self permanent
+33:33:00:00:00:01 dev br0 self permanent
+01:00:5e:00:00:6a dev br0 self permanent
+33:33:00:00:00:6a dev br0 self permanent
+01:00:5e:00:00:01 dev br0 self permanent
+33:33:ff:e3:40:4b dev br0 self permanent
+01:00:5e:00:00:fc dev br0 self permanent
+01:00:5e:00:00:fb dev br0 self permanent
+33:33:00:01:00:03 dev br0 self permanent
+33:33:00:00:00:fb dev br0 self permanent
+16:a0:5e:e3:40:4b dev br0 vlan 1 used 2685/2685 master br0 permanent
+16:a0:5e:e3:40:4b dev br0 used 2685/2685 master br0 permanent
+```
+
+```sh
+Linux% brctl setageing br0 1
+Linux% brctl showmacs br0
+port no mac addr is local? ageing timer
+  1 00:04:5a:9f:9e:80 no 0.76
+  2 00:07:e9:14:a9:c1 yes 0.00
+  1 00:08:74:93:c8:3c yes 0.00
+  2 00:14:22:f4:19:5f no 0.78
+  1 00:17:f2:e7:6d:91 no 0.00
+```
+
+```sh
+linux$ sudo ip link set dev br0 type bridge ageing_time 500
+```
+
+If trying this with a VM, you probably would see nothing with this
+
+```sh
+bridge -s fdb show br0 | grep -v permanent
+```
+
+To see how the aging timer work, set up two terminals with ssh connections to the VM.
+
+Terminal one
+
+```sh
+watch -n 0.1 "bridge -s fdb show | grep -v permanent"
+```
+
+Terminal two, any type of request will do, you could be not connected to ssh and
+then try to make a connection and you would see it on Terminal one
+
+```sh
+linux$ ls
+```
