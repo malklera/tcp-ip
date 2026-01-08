@@ -526,3 +526,94 @@ then try to make a connection and you would see it on Terminal one
 ```sh
 linux$ ls
 ```
+### 3.4.1. Spanning Tree Protocol (STP)
+#### 3.4.1.5. Example
+
+```sh
+Linux% brctl stp br0 on
+```
+
+You need some working bridges before doing this. 
+
+```sh
+linux$ sudo ip link set dev br0 type bridge stp_state 1
+```
+
+```sh
+Linux% brctl showstp br0
+```
+
+```sh
+linux$ ip -d link show br0
+5: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 16:a0:5e:e3:40:4b brd ff:ff:ff:ff:ff:ff promiscuity 0 allmulti 0 minmtu 68 maxmtu 65535 netns-immutable
+    bridge forward_delay 1500 hello_time 200 max_age 2000 ageing_time 30000 stp_state 1 priority 32768 vlan_filtering 0 vlan_protocol 802.1Q bridge_id 8000.16:a0:5e:e3:40:4b designated_root 8000.16:a0:5e:e3:40:4b root_port 0 root_path_cost 0 topology_change 0 topology_change_detected 0 hello_timer    0.14 tcn_timer    0.00 topology_change_timer    0.00 gc_timer   53.42 fdb_n_learned 1 fdb_max_learned 0 vlan_default_pvid 1 vlan_stats_enabled 0 vlan_stats_per_port 0 group_fwd_mask 0 group_address 01:80:c2:00:00:00 mcast_snooping 1 no_linklocal_learn 0 mcast_vlan_snooping 0 mst_enabled 0 mdb_offload_fail_notification 0 fdb_local_vlan_0 0 mcast_router 1 mcast_query_use_ifaddr 0 mcast_querier 0 mcast_hash_elasticity 16 mcast_hash_max 4096 mcast_last_member_count 2 mcast_startup_query_count 2 mcast_last_member_interval 100 mcast_membership_interval 26000 mcast_querier_interval 25500 mcast_query_interval 12500 mcast_query_response_interval 1000 mcast_startup_query_interval 3125 mcast_stats_enabled 0 mcast_igmp_version 2 mcast_mld_version 1 nf_call_iptables 0 nf_call_ip6tables 0 nf_call_arptables 0 addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536
+linux$ bridge -d link show
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
+    hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on bcast_flood on mcast_router 1 mcast_to_unicast off neigh_suppress off neigh_vlan_suppress off vlan_tunnel off isolated off locked off mab off mcast_n_groups 0 mcast_max_groups 0
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100
+    hairpin off guard off root_block off fastleave off learning on flood on mcast_flood on bcast_flood on mcast_router 1 mcast_to_unicast off neigh_suppress off neigh_vlan_suppress off vlan_tunnel off isolated off locked off mab off mcast_n_groups 0 mcast_max_groups 0
+```
+
+```sh
+linux$ sudo tshark -i enp0s8 -Y "stp" -V
+Running as user "root" and group "root". This could be dangerous.
+Capturing on 'enp0s8'
+Frame 1: Packet, 52 bytes on wire (416 bits), 52 bytes captured (416 bits) on interface enp0s8, id 0
+    Section number: 1
+    Interface id: 0 (enp0s8)
+        Interface name: enp0s8
+    Encapsulation type: Ethernet (1)
+    Arrival Time: Jan  7, 2026 22:00:24.634843505 -03
+    UTC Arrival Time: Jan  8, 2026 01:00:24.634843505 UTC
+    Epoch Arrival Time: 1767834024.634843505
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time since reference or first frame: 0.000000000 seconds]
+    Frame Number: 1
+    Frame Length: 52 bytes (416 bits)
+    Capture Length: 52 bytes (416 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: eth:llc:stp]
+    Character encoding: ASCII (0)
+IEEE 802.3 Ethernet
+    Destination: Nearest-Customer-Bridge (01:80:c2:00:00:00)
+        .... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+        .... ...1 .... .... .... .... = IG bit: Group address (multicast/broadcast)
+    Source: 52:54:00:12:34:56 (52:54:00:12:34:56)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Length: 38
+    [Stream index: 0]
+Logical-Link Control
+    DSAP: Spanning Tree BPDU (0x42)
+        0100 001. = SAP: Spanning Tree BPDU
+        .... ...0 = IG Bit: Individual
+    SSAP: Spanning Tree BPDU (0x42)
+        0100 001. = SAP: Spanning Tree BPDU
+        .... ...0 = CR Bit: Command
+    Control field: U, func=UI (0x03)
+        000. 00.. = Command: Unnumbered Information (0x00)
+        .... ..11 = Frame type: Unnumbered frame (0x3)
+Spanning Tree Protocol
+    Protocol Identifier: Spanning Tree Protocol (0x0000)
+    Protocol Version Identifier: Spanning Tree (0)
+    BPDU Type: Configuration (0x00)
+    BPDU flags: 0x00
+        0... .... = Topology Change Acknowledgment: No
+        .... ...0 = Topology Change: No
+    Root Identifier: 32768 / 0 / 16:a0:5e:e3:40:4b
+        Root Bridge Priority: 32768
+        Root Bridge System ID Extension: 0
+        Root Bridge System ID: 16:a0:5e:e3:40:4b (16:a0:5e:e3:40:4b)
+    Root Path Cost: 0
+    Bridge Identifier: 32768 / 0 / 16:a0:5e:e3:40:4b
+        Bridge Priority: 32768
+        Bridge System ID Extension: 0
+        Bridge System ID: 16:a0:5e:e3:40:4b (16:a0:5e:e3:40:4b)
+    Port identifier: 0x8001
+    Message Age: 0
+    Max Age: 20
+    Hello Time: 2
+    Forward Delay: 15
+```

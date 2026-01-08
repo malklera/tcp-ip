@@ -71,6 +71,9 @@
 - ISL : Inter-Switch Link
 - LACP : Link Agregation Control Protocol
 - NICs : Network Interface Card
+- STP : Spanning Tree Protocol
+- RSTP : Rapid Spanning Tree Protocol
+- BPDUs : Bridge Protocol Data Units
 
 
 # 1. Introduction
@@ -180,6 +183,3 @@ rest of the address can be manage by local administrators to be again divided
 on net/host
 
 # 3. Link Layer
-
-### 3.2. Ethernet and the IEEE 802 LAN/MAN Standards
-
