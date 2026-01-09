@@ -49,9 +49,9 @@ I will not look for tools for MacOs because I do not think I will ever touch one
 ~~If you use a system where this tools are not available, I do not care, good luck. And not, this document is not an excuse to say that I use Arch btw~~
 
 # 2. The Internet Address Architecture
-2.3. Basic IP Address Structure
-2.3.6. IPv6 Addresses and Interface Identifiers
-2.3.6.1. Examples
+## 2.3. Basic IP Address Structure
+### 2.3.6. IPv6 Addresses and Interface Identifiers
+#### 2.3.6.1. Examples
 
 ```sh
 Linux% ifconfig
@@ -616,4 +616,67 @@ Spanning Tree Protocol
     Max Age: 20
     Hello Time: 2
     Forward Delay: 15
+```
+
+## 3.5. Wireless LANs—IEEE 802.11(Wi-Fi)
+
+VMs do not have wireless connections, you can get access to one with a usb card
+and allowing the VM to access it, or run the commands from the host if you have
+Wi-Fi on it.
+
+I do not have Wi-Fi, so the modern example commands do not show output.
+
+### 3.5.1. 802.11 Frames
+#### 3.5.1.1. Management Frames
+
+```sh
+Linux% iwlist wlan0 scan
+wlan0 Scan completed :
+            Cell 01 - Address: 00:02:6F:20:B5:84
+                     ESSID:"Grizzly-5354-Aries-802.11b/g"
+                     Mode:Master
+                     Channel:4
+                      Frequency:2.427 GHz (Channel 4)
+                     Quality=5/100 Signal level=47/100
+                     Encryption key:on
+                     IE: WPA Version 1
+                        Group Cipher : TKIP
+                        Pairwise Ciphers (2) : CCMP TKIP
+                        Authentication Suites (1) : PSK
+                     Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s;
+                            6 Mb/s; 12 Mb/s; 24 Mb/s; 36 Mb/s; 9 Mb/s;
+                            18 Mb/s; 48 Mb/s; 54 Mb/s
+                     Extra:tsf=0000009d832ff037
+```
+
+Check for the name of the device
+
+```sh
+linux$ iw dev
+```
+
+Actually do the scan.
+
+```sh
+linux$ sudo iw dev <devname> scan
+```
+
+#### 3.5.1.2. Control Frames: RTS/CTS and ACKs
+
+```sh
+Linux% iwconfig wlan0 rts 250
+wlan0 IEEE 802.11g ESSID:"Grizzly-5354-Aries-802.11b/g"
+           Mode:Managed
+           Frequency:2.427 GH
+           Access Point: 00:02:6F:20:B5:84
+           Bit Rate=24 Mb/s Tx-Power=0 dBm
+           Retry min limit:7 RTS thr=250 B Fragment thr=2346 B
+           Encryption key:xxxx- ... -xxxx [3]
+           Link Quality=100/100 Signal level=46/100
+           Rx invalid nwid:0 Rx invalid crypt:0 Rx invalid frag:0
+           Tx excessive retries:0 Invalid misc:0 Missed beacon:0
+```
+
+```sh
+linux$ sudo iw phy <phyname> set rts 250
 ```
