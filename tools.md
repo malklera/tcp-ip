@@ -32,6 +32,14 @@ http://ahh.sourceforge.net/wol/
 
 `sudo pacman -S --needed wol`
 
+## iw
+
+iw - show / manipulate wireless devices and their configuration
+
+https://wireless.docs.kernel.org/en/latest/en/users/documentation/iw.html
+
+`sudo pacman -S --needed iw`
+
 # Usefull tools to have
 
 ## tshark
