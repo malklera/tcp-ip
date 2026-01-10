@@ -90,13 +90,13 @@ http://[2001:0db8:85a3:08d3:1319:8a2e:0370:7344]:443/
 What determines the class is the first block of the address 0-255.0-255.0-255.0-255
 the rest of the blocks range between 0-255 each
 
-| Class | Address Range | High order bits | Fraction of total |
-| - | - | - | - |
-| A | 0 - 127 | 0 | 1/2 |
-| B | 128 - 191 | 10 | 1/4 |
-| C | 192 - 223 | 110 | 1/8 |
-| D | 224 - 239 | 1110 | 1/16 |
-| E | 240 - 255 | 1111 | 1/16 |
+| Class | Address Range | High order bits   | Fraction of total
+| -     | -             | -                 | -
+| A     | 0 - 127       | 0                 | 1/2
+| B     | 128 - 191     | 10                | 1/4
+| C     | 192 - 223     | 110               | 1/8
+| D     | 224 - 239     | 1110              | 1/16
+| E     | 240 - 255     | 1111              | 1/16
 
 ### 2.3.2. Subnet Addressing
 
@@ -105,3 +105,80 @@ rest of the address can be manage by local administrators to be again divided
 on net/host
 
 # 3. Link Layer
+## 3.5. Wireless LANs—IEEE 802.11(Wi-Fi)
+### 3.5.4. Physical-Layer Details: Rates, Channels, and Frequencies
+
+The standards has changed since the writing here, and the regulatory part is
+country dependent, most of the interference problems has been worked out on new
+standards.
+
+Acording to [https://wireless.docs.kernel.org/en/latest/en/developers/regulatory/wireless-regdb.html](linux)
+this are the frequency configs used by the kernel.
+
+How to read.
+
+DFS : Dynamic Frequency Selection, works by "listening" before selecting a frequency
+AUTO-BW : Automatic Bandwidth, allowed to negotiate channel width shifts
+FCC : Federal Communications Commission, USA
+ETSI : European Telecommunications Standards Institute
+JP : Japan, regulated by Ministry of Internal Affairs and Communications
+NO-IR : No Initiate Radiation, passive scan only
+NO-OUTDOOR : Not allowed to use outdoors
+
+country <initial of country>: <flags>
+
+    (<int, minimal frequency> - <int, maximum frequency> @ <int, maximum channel width>), (<int, maximum transmit power on dBm>), <flags>
+
+United States.
+
+```sh
+# https://www.ecfr.gov/cgi-bin/text-idx?SID=eed706a2c49fd9271106c3228b0615f3&mc=true&node=pt47.1.15&rgn=div5
+# Title 47 Part 15 - Radio Frequency Devices, April 2, 2020
+# Channels 12 and 13 are not forbidden, but are not normally used with full
+# power in order to avoid any potential interference in the adjacent restricted
+# frequency band, 2,483.5–2,500 MHz which is subject to strict emission limits
+# set out in 47 CFR § 15.205. TODO: reenable and specify a safe TX power here.
+country US: DFS-FCC
+	# S1G Channel 1-3
+	(902 - 904 @ 2), (30)
+	# S1G Channel 5-35
+	(904 - 920 @ 16), (30)
+	# S1G Channel 37-51
+	(920 - 928 @ 8), (30)
+	(2400 - 2472 @ 40), (30)
+	# 5.15 ~ 5.25 GHz: 30 dBm for master mode, 23 dBm for clients
+	(5150 - 5250 @ 80), (23), AUTO-BW
+	(5250 - 5350 @ 80), (24), DFS, AUTO-BW
+	# This range ends at 5725 MHz, but channel 144 extends to 5730 MHz.
+	# Since 5725 ~ 5730 MHz belongs to the next range which has looser
+	# requirements, we can extend the range by 5 MHz to make the kernel
+	# happy and be able to use channel 144.
+	(5470 - 5730 @ 160), (24), DFS
+	(5730 - 5850 @ 80), (30), AUTO-BW
+	# https://www.federalregister.gov/documents/2021/05/03/2021-08802/use-of-the-5850-5925-ghz-band
+	# max. 33 dBm AP @ 20MHz, 36 dBm AP @ 40Mhz+, 6 dB less for clients
+	(5850 - 5895 @ 40), (27), NO-OUTDOOR, AUTO-BW, NO-IR
+	# 6g band
+	# https://www.federalregister.gov/documents/2020/05/26/2020-11236/unlicensed-use-of-the-6ghz-band
+	(5925 - 7125 @ 320), (12), NO-OUTDOOR, NO-IR
+	# 60g band
+	# reference: section IV-D https://docs.fcc.gov/public/attachments/FCC-16-89A1.pdf
+	# channels 1-6 EIRP=40dBm(43dBm peak)
+	(57240 - 71000 @ 2160), (40)
+```
+
+Argentina
+
+```sh
+# Source:
+# https://www.boletinoficial.gob.ar/detalleAviso/primera/287126/20230524
+country AR: DFS-FCC
+	(2402 - 2482 @ 40), (20)
+	(5170 - 5250 @ 80), (17), AUTO-BW
+	(5250 - 5330 @ 80), (24), DFS, AUTO-BW
+	(5490 - 5730 @ 160), (24), DFS
+	(5735 - 5835 @ 80), (30)
+	(5925 - 7125 @ 320), (12), NO-OUTDOOR
+```
+
+

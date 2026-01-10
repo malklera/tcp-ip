@@ -118,13 +118,13 @@ BSD Berkeley Software Distribution (UC Berkeley’s version of UNIX, included th
 
 BSDP Boot Server Discovery Protocol (an extension to DHCP developed by Apple to discover a boot image server)
 
-BSS Basic Service Set (IEEE 802.11 terminology for an access point and associated stations)
+BSS : Basic Service Set (IEEE 802.11 terminology for an access point and associated stations)
 
 BTNS Better Than Nothing Security (with IPsec, an option for using certificates without a full PKI but which is vulnerable to MITM attacks)
 
 BU Binding Update (in MIP, establishes the mapping between a MN’s CoA and HoA)
 
-CA Certificate Authority (organization responsible for generating and issuing public/private key pairs and signing and distributing signed public keys and CRLs)
+CA : Certificate Authority (organization responsible for generating and issuing public/private key pairs and signing and distributing signed public keys and CRLs)
 
 CALIPSO Common Architecture Label IPv6 Security Option (security labels for IP packets; not widely used)
 
@@ -132,7 +132,7 @@ CBC Cipher Block Chaining (an encryption mode that uses the XOR operation to cha
 
 CBCP Callback Control Protocol (in PPP, establishes a callback number)
 
-CCA Clear Channel Assessment (802.11 PHY-layer mechanism that detects channel usage)
+CCA : Clear Channel Assessment (802.11 PHY-layer mechanism that detects channel usage)
 
 CCITT Comité Consultatif International Téléphonique et Télégraphique (now ITU-T)
 
@@ -186,9 +186,9 @@ CS Cipher Suite (in TLS, the choice of cryptographic algorithm suite)
 
 CS Class Selector (in IP, a DSCP value designed to be compatible with the bit values associated with the now-deprecated “Type of Service” and “Traffic Class” IP header fields)
 
-CSMA/CA Carrier-Sense Multiple Access/Collision Avoidance (WiFi’s MAC protocol, which involves sending when a link is idle and backing off if it is not)
+CSMA/CA : Carrier-Sense Multiple Access/Collision Avoidance (WiFi’s MAC protocol, which involves sending when a link is idle and backing off if it is not)
 
-CSMA/CD Carrier-Sense Multiple Access/Collision Detection (Ethernet’s classic MAC protocol, which involves sending when a link is idle and backing off if collisions are detected)
+CSMA/CD : Carrier-Sense Multiple Access/Collision Detection (Ethernet’s classic MAC protocol, which involves sending when a link is idle and backing off if collisions are detected)
 
 CSPRNG Cryptographycially Secure Preudo-Random Number Generator (a PRNG suitable for cryptographic use)
 
@@ -198,9 +198,9 @@ CTCP Compound TCP (a “scalable” TCP variant implemented in modern Windows sy
 
 CTR Counter (an encryption mode that uses a counter value to impose a required order on encrypted blocks while permitting parallel execution of encryption or decryption on multiple blocks)
 
-CTS Clear To Send (message authorizing sender of RTS to send)
+CTS : Clear To Send (message authorizing sender of RTS to send)
 
-CW Contention Window (range of time an 802.11 station will wait before sending under DCF)
+CW : Contention Window (range of time an 802.11 station will wait before sending under DCF)
 
 CWND Congestion Window (in TCP, a limit placed on the sender’s window size to avoid or reduce congestion)
 
@@ -212,7 +212,7 @@ DAD Duplicate Address Detection (with IPv6 ND and SLAAC, DAD helps determine whe
 
 DCCP Datagram Congestion Control Protocol (a protocol that provides best-effort datagram service to applications and also controls congestion)
 
-DCF Distributed Coordination Function (CSMA/CA MAC for 802.11 networks)
+DCF : Distributed Coordination Function (CSMA/CA MAC for 802.11 networks)
 
 DDDS Dynamic Delegation Discovery System (methods to support lazy binding of strings to data; usually used with DNS for discovery of servers for various application protocols)
 
@@ -228,7 +228,7 @@ DH Diffie-Hellman (mathematical protocol to establish a secret value between two
 
 DHCP Dynamic Host Configuration Protocol (evolved from BOOTP; sets up systems with configuration information such as leased IP addresses, default router, and DNS server IP address)
 
-DIFS DCF Inter-Frame Space (time between frames under 802.11 DCF)
+DIFS : DCF Inter-Frame Space (time between frames under 802.11 DCF)
 
 DIX Digital, Intel, Xerox (creators and name of early Ethernet standard)
 
@@ -310,7 +310,7 @@ ECP Elliptic Curve groups modulo a Prime (groups based on elliptic curves, in th
 
 ECT ECN-Capable Transport (in IP, a bit indicating a transport protocol is capable of interpreting ECN indicators)
 
-EDCA Enhanced Distributed Channel Access (802.11 coordinating function supporting QoS, from 802.11e)
+EDCA : Enhanced Distributed Channel Access (802.11 coordinating function supporting QoS, from 802.11e)
 
 EDNS0 Extension mechanisms for DNS (version 0) (a method to extend DNS RRs, version 0, needed by DNSSEC)
 
@@ -318,7 +318,7 @@ EF Expedited Forwarding (a PHB offering a service class as if no congestion were
 
 EFO Expanded Flags Option (used with DHCP, indicates presence of additional options)
 
-EIFS Extended IFS (extended IFS used when receiving unrecognized frame under 802.11 DCF)
+EIFS : Extended IFS (extended IFS used when receiving unrecognized frame under 802.11 DCF)
 
 EMSK Extended MSK (a secondary key generated in addition to the MSK by EAP after key derivation)
 
@@ -402,7 +402,7 @@ HA Home Agent (system offering MIP helper service to an MN)
 
 HAIO Home Agent Information Option (in ICMPv6, an option supporting MIPv6 to indicate address of an HA)
 
-HCF Hybrid Coordination Function (coordinating function supporting both priority and contention-based 802.11 channel access)
+HCF : Hybrid Coordination Function (coordinating function supporting both priority and contention-based 802.11 channel access)
 
 HDLC High-level Data Link Control (a popular ISO standard data link protocol, the basis for the most popular variant of PPP)
 
@@ -508,7 +508,7 @@ IS-IS Intermediate System to Intermediate System (ISO link-state routing protoco
 
 ISL Cisco’s Inter-Switch Protocol (Cisco’s protocol for maintaining VLAN information among switches)
 
-ISM Industrial, Scientific, and Medical (licence-free frequency bands in much of the world, used by Wi-Fi)
+ISM : Industrial, Scientific, and Medical (licence-free frequency bands in much of the world, used by Wi-Fi)
 
 ISN Initial Sequence Number (in TCP, the first sequence number for a connection; assigned to the SYN)
 
@@ -674,7 +674,7 @@ NAT-PMP NAT Port Mapping Protocol (an alternative to IGD developed by Apple for 
 
 NAT-PT NAT with Protocol Translation (now-deprecated approach to IPv4/IPv6 translation)
 
-NAV Network Allocation Vector (time delay before sending due to other stations’ channel use in 802.11 DCF)
+NAV : Network Allocation Vector (time delay before sending due to other stations’ channel use in 802.11 DCF)
 
 NBMA Non-Broadcast Multiple Access (multi-user networks lacking broadcasting capability)
 
@@ -744,7 +744,7 @@ PAP Password Authentication Protocol (protocol that carries cleartext password; 
 
 PAWS Protection Against Wrapped Sequence Numbers (in TCP, method using TSOPT values to notice sequence number wrapping)
 
-PCF Point Coordinating Function (combined contention-free and contention-based MAC protocol for 802.11; not widely used)
+PCF : Point Coordinating Function (combined contention-free and contention-based MAC protocol for 802.11; not widely used)
 
 PCO Phased Coexistence Operation (method for an 802.11 AP to switch channel widths for less negative impact on legacy equipment)
 
@@ -810,7 +810,9 @@ PTB Packet Too Big (a ICMP Destination Unreachable Fragmentation Required or IPv
 
 QAM Quadrature Amplitude Modulation (combination of phase and amplitude modulation)
 
-QBSS QoS BSS (an 802.11 BSS enhanced with 802.11e or 802.11n QoS features)
+QAP : QoS Access Points
+
+QBSS : QoS BSS (an 802.11 BSS enhanced with 802.11e or 802.11n QoS features)
 
 QI Query Interval (in IGMP and MLD, time between general queries)
 
@@ -828,7 +830,7 @@ QRV Querier Robustness Variable (in IGMP and MLD, sets number of retransmissions
 
 QS Quick Start (in TCP, an experimental modification for faster startup behavior provided devices on the path agree)
 
-QSTA QoS STA (an 802.11 STA supporting QoS capabilities)
+QSTA : QoS STA (an 802.11 STA supporting QoS capabilities)
 
 RA Router Advertisement (message indicating presence of an on-link router neighbor; uses ICMP)
 
@@ -898,7 +900,7 @@ RSTP Rapid Spanning Tree Protocol (decreased latency version of STP)
 
 RTO Retransmission Timeout (time before retransmitting data thought to be lost)
 
-RTS Request To Send (message indicating desire to send a subsequent message)
+RTS : Request To Send (message indicating desire to send a subsequent message)
 
 RTT Round Trip Time (minimum time to expect a response from a communication peer)
 
@@ -942,13 +944,13 @@ SFD Start Frame Delimiter (bit pattern indicating the starting portion of frame 
 
 SG Security Gateway (with IPsec, system terminating IPsec protocols, often at network edge)
 
-SHA Secure Hash Algorithm (one of a set of hashing algorithms suitable for ensuring message integrity)
+SHA : Secure Hash Algorithm (one of a set of hashing algorithms suitable for ensuring message integrity)
 
-SIFS Shorts Inter-Frame Space (smallest amount of time between an 802.11 frame and its ACK)
+SIFS : Shorts Inter-Frame Space (smallest amount of time between an 802.11 frame and its ACK)
 
 SIIT Stateless IP/ICMP Translation (a framework for translation between IPv4 and IPv6, including special rules for ICMP translation, NAT64, and DNS64)
 
-SIP Session Initiation Protocol (general signaling protocol; used with VoIP)
+SIP : Session Initiation Protocol (general signaling protocol; used with VoIP)
 
 SLAAC Stateless Address Autoconfiguration (a mechanism whereby a node self-configures its own IP address; usually applies to IPv6 nodes)
 
@@ -1036,7 +1038,7 @@ TSIG Transaction Signatures (signatures used to secure individual DNS transactio
 
 TSOPT Timestamps Option (in TCP, an option including the TSV and TSER values)
 
-TSPEC Traffic Specification (a structure indicating traffic parameters for 802.11 QoS)
+TSPEC : Traffic Specification (a structure indicating traffic parameters for 802.11 QoS)
 
 TSV Timestamp Value (in TCP, portion of TSOPT used to identify the sender’s time—used in RTTM and PAWS)
 
@@ -1046,15 +1048,15 @@ TURN Traversal Using Relay NAT (a protocol in which a third party relays informa
 
 TWA Time-Wait Assassination (in TCP, an erroneous condition caused by receiving certain segments during TIME-WAIT state)
 
-TXOP Transmission Opportunity (in 802.11, a form of “credit” allowing a station to send one or more frames)
+TXOP : Transmission Opportunity (in 802.11, a form of “credit” allowing a station to send one or more frames)
 
-TXT Text (DNS RR carrying descriptive text; used by DKIM)
+TXT : Text (DNS RR carrying descriptive text; used by DKIM)
 
 UBM Unicast Prefix-based Multicast addressing (deriving multicast addresses based on assigned unicast prefixes)
 
 UDL Unidirectional Link (link providing communication in only one direction)
 
-UDP User Datagram Protocol (a best-effort message protocol with message boundaries and lacking congestion or flow control)
+UDP : User Datagram Protocol (a best-effort message protocol with message boundaries and lacking congestion or flow control)
 
 UEQM Unequal Modulation (using different modulation schemes on different data streams simultaneously)
 
@@ -1062,11 +1064,11 @@ ULA Unique Local IPv6 Unicast Addresses (private addresses used with IPv6, alloc
 
 U-NAPTR URI-enabled NAPTR (simplified NAPTR allowing limited regular expression substitution)
 
-U-NII Unlicensed National Information Infrastructure (unlicensed radio spectrum in much of the world)
+U-NII : Unlicensed National Information Infrastructure (unlicensed radio spectrum in much of the world)
 
 UNSAF Unilateral Self-Address Fixing (heuristics used in an attempt to determine how a traffic flow is identified after passing through a NAT; a fragile process for which techniques like ICE are recommended alternatives)
 
-UP User Priority (802.11 priorities; based on same terminology from 802.1d)
+UP : User Priority (802.11 priorities; based on same terminology from 802.1d)
 
 UPnP Universal Plug and Play (a protocol framework for device and service discovery aimed at the residential user; standardized by the UPnP Forum)
 
@@ -1090,7 +1092,7 @@ VLAN Virtual LAN (used most often to simulate multiple distinct LANs on shared w
 
 VLSM Variable-Length Subnet Masks (proximal use of subnet masks of differing lengths in same environment)
 
-VoIP Voice over IP (the carriage of voice traffic over IP networks, usually involves SIP signaling)
+VoIP : Voice over IP (the carriage of voice traffic over IP networks, usually involves SIP signaling)
 
 VPN Virtual Private Network (virtually isolated network; often encrypted)
 
@@ -1102,7 +1104,7 @@ WEP Wired Equivalent Privacy (original WiFi encryption; found to be catastrophic
 
 WESP Wrapped ESP (in IPsec, a method to prepend ESP with a header to indicate if the following traffic is encrypted or only authenticated; useful for inspection by middleboxes)
 
-Wi-Fi Wireless Fidelity (IEEE 802.11 wireless LAN standard)
+Wi-Fi : Wireless Fidelity (IEEE 802.11 wireless LAN standard)
 
 WiMAX Worldwide Interoperability for Microwave Access (IEEE 802.16 wireless broadband standard)
 
@@ -1110,9 +1112,9 @@ WKP Well-Known Prefix (a checksum neutral IPv6 prefix, 64:ff9b::/96, used in alg
 
 WLAN Wireless LAN (a wireless LAN such as WiFi)
 
-WMM Wi-Fi Multimedia (subset of 802.11e QoS functions now available in 802.11n)
+WMM : Wi-Fi Multimedia (subset of 802.11e QoS functions now available in 802.11n)
 
-WoL Wake on LAN (method to remain in “sleep” mode until a particular packet is received)
+WoL : Wake on LAN (method to remain in “sleep” mode until a particular packet is received)
 
 WPA WiFi Protected Access (802.11 encryption method)
 
@@ -1122,7 +1124,7 @@ WRED Weighted RED (RED where the mark/drop probablity is a function of traffic c
 
 WSCALE, WOPT, WSOPT Window Scale Option (in TCP, an option indicating a scaling factor is to be applied to the Window Size field)
 
-WWW World Wide Web (networked data environment using the HTTP/TCP/IP protocol suite)
+WWW : World Wide Web (networked data environment using the HTTP/TCP/IP protocol suite)
 
 X.25 ITU-T recommendation X.25 (an ITU-T standard packet switched network standard covering OSI layers 1-3; the most popular packet switched technology until widespread use of TCP/IP)
 
