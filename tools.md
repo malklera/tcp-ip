@@ -40,6 +40,16 @@ https://wireless.docs.kernel.org/en/latest/en/users/documentation/iw.html
 
 `sudo pacman -S --needed iw`
 
+## telnet
+
+Login to remote system HOST (optionally, on service port PORT
+
+https://www.gnu.org/software/inetutils/
+
+`sudo pacman -S --needed inetutils`
+
+---
+
 # Usefull tools to have
 
 ## tshark

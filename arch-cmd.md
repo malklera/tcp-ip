@@ -657,3 +657,117 @@ wlan0 IEEE 802.11g ESSID:"Grizzly-5354-Aries-802.11b/g"
 ```sh
 linux$ sudo iw phy <phyname> set rts 250
 ```
+
+## 3.7. Loopback
+
+```sh
+Linux% ifconfig lo
+lo Link encap:Local Loopback
+           inet addr:127.0.0.1 Mask:255.0.0.0
+           inet6 addr: ::1/128 Scope:Host
+           UP LOOPBACK RUNNING MTU:16436 Metric:1
+           RX packets:458511 errors:0 dropped:0 overruns:0 frame:0
+           TX packets:458511 errors:0 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0
+           RX bytes:266049199 (253.7 MiB)
+           TX bytes:266049199 (253.7 MiB)
+```
+
+```sh
+linux$ ip -d addr show lo
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 netns-immutable numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 524280 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+linux$ ip -s link show lo
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    RX:  bytes packets errors dropped  missed   mcast
+             0       0      0       0       0       0
+    TX:  bytes packets errors dropped carrier collsns
+             0       0      0       0       0       0
+```
+
+# 4. ARP: Address Resolution Protocol
+## 4.3. ARP Cache
+
+```sh
+Linux% arp
+Address             HWtype  HWaddress           Flags Mask Iface
+gw.home             ether   00:0D:66:4F:60:00   C          eth1
+printer.home        ether   00:0A:95:87:38:6A   C          eth1
+
+Linux% arp -a
+printer.home (10.0.0.4) at     00:0A:95:87:38:6A [ether] on eth1
+gw.home (10.0.0.1) at 00:0D:66:4F:60:00 [ether] on eth1
+```
+
+```sh
+linux$ ip neighbor
+10.0.2.2 dev enp0s8 lladdr 52:55:0a:00:02:02 STALE
+10.0.4.2 dev enp0s11 lladdr 52:55:0a:00:04:02 REACHABLE
+10.0.3.2 dev enp0s12 lladdr 52:55:0a:00:03:02 STALE
+fe80::2 dev enp0s11 lladdr 52:56:00:00:00:02 router STALE
+fe80::2 dev enp0s8 lladdr 52:56:00:00:00:02 router STALE
+fe80::2 dev enp0s12 lladdr 52:56:00:00:00:02 router STALE
+
+linux$ ip -s neighbor
+10.0.2.2 dev enp0s8 lladdr 52:55:0a:00:02:02  used 721/721/677probes 1 STALE
+10.0.4.2 dev enp0s11 lladdr 52:55:0a:00:04:02  ref 1 used 7/0/7probes 1 REACHABLE
+10.0.3.2 dev enp0s12 lladdr 52:55:0a:00:03:02  used 720/720/701probes 1 STALE
+fe80::2 dev enp0s11 lladdr 52:56:00:00:00:02 router  used 8944/9004/8944probes 0 STALE
+fe80::2 dev enp0s8 lladdr 52:56:00:00:00:02 router  used 8946/9006/8946probes 0 STALE
+fe80::2 dev enp0s12 lladdr 52:56:00:00:00:02 router  used 8946/9006/8946probes 0 STALE
+```
+
+## 4.5. ARP Examples
+### 4.5.1. Normal Example
+
+```sh
+C:\> arp -a                   Verify that the ARP cache is empty
+No ARP Entries Found
+C:\> telnet 10.0.0.3 www      Connect to the Web server [port 80]
+Connecting to 10.0.0.3...
+Escape character is ’^]’.
+```
+
+On Host
+
+```sh
+python3 -m http.server 8000 --bind 0.0.0.0
+```
+
+On VM
+
+Terminal A
+
+```sh
+linux$ sudo ip neighbor flush all
+linux$ ip neighbor show
+10.0.3.2 dev enp0s12 lladdr 52:55:0a:00:03:02 REACHABLE
+```
+
+Terminal B, when you run the command, you would get the output up to "Capturingon 'enp0s8'"
+
+```sh
+linux$ sudo tshark -i enp0s8 -Y "arp || tcp.port == 8000"
+Running as user "root" and group "root". This could be dangerous.
+Capturing on 'enp0s8'
+    1 0.000000000 52:54:00:12:34:56 → Broadcast    ARP 42 Who has 10.0.2.2? Tell 10.0.2.15
+    2 0.000079681 52:55:0a:00:02:02 → 52:54:00:12:34:56 ARP 64 10.0.2.2 is at 52:55:0a:00:02:02
+    3 0.000086511    10.0.2.15 → 10.0.2.2     TCP 74 43588 → 8000 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=747956706 TSecr=0 WS=512
+    4 0.000377564     10.0.2.2 → 10.0.2.15    TCP 60 8000 → 43588 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=1460
+    5 0.000394794    10.0.2.15 → 10.0.2.2     TCP 54 43588 → 8000 [ACK] Seq=1 Ack=1 Win=64240 Len=0
+```
+
+Terminal A, after running this command, go back to Terminal B and you will see
+the packets.
+
+```sh
+linux$ telnet 10.0.2.2 8000
+Trying 10.0.2.2...
+Connected to 10.0.2.2.
+Escape character is '^]'
+```

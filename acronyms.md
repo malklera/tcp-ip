@@ -10,7 +10,7 @@
 
 A Address (IPv4) (DNS RR carrying an IPv4 address)
 
-AAA Authentication, Authorization and Accounting (management capabilities associated with certain access protocols such as RADIUS and Diameter)
+AAA : Authentication, Authorization and Accounting (management capabilities associated with certain access protocols such as RADIUS and Diameter)
 
 AAAA Address (IPv6) (DNS RR carrying an IPv6 address)
 
@@ -18,11 +18,11 @@ ABC Appropriate Byte Counting (in TCP congestion control, a method to account fo
 
 AC Attribute Certificate (a type of certificate used to carry attributes such as authorizations, but does not include a public key and therefore differs from a PKC)
 
-ACCM Asynchronous Control Character Map (in PPP, indicates which bytes need to be escaped to avoid having unwanted effects)
+ACCM : Asynchronous Control Character Map (in PPP, indicates which bytes need to be escaped to avoid having unwanted effects)
 
 ACD Automatic Collision Detection (procedure to detect and avoid IP address assignment collisions)
 
-ACFC Address and Control Field Compression (in PPP, eliminating the address and control fields to reduce overhead)
+ACFC : Address and Control Field Compression (in PPP, eliminating the address and control fields to reduce overhead)
 
 ACK : Acknowledgment (an indication that data has arrived at a receiver successfully; applicable to multiple layers of the protocol stack)
 
@@ -32,7 +32,7 @@ ADSP Author Domain Signing Practices (with DKIM, a policy statement pertaining t
 
 AEAD Authenticated Encryption with Associated Data (algorithms that perform encryption and authentication on one portion of their input and authentication on another portion)
 
-AES Advanced Encryption Standard (current-generation U.S. encryption standard)
+AES : Advanced Encryption Standard (current-generation U.S. encryption standard)
 
 AF Assured Forwarding (a PHB offering priority classes and prioritization within classes)
 
@@ -54,7 +54,7 @@ A-MSDU : Aggregated MSDU (frame containing multiple MSDUs, part of IEEE 802.11n)
 
 ANDSF Access Network Discovery and Selection Function (a portion of MoS indicating information about networks that may be used to influence handoff and network selection)
 
-AODV Ad-hoc On-Demand Distance Vector routing protocol (early ad-hoc on-demand routing protocol using distance vectors)
+AODV : Ad-hoc On-Demand Distance Vector routing protocol (early ad-hoc on-demand routing protocol using distance vectors)
 
 AP : Access Point (802.11 STA usually used to interconnect wireless and wired network segments)
 
@@ -66,7 +66,7 @@ APSD : Automatic Power Save Delivery (periodic batch processing of 802.11 frames
 
 AQM Active Queue Management (queue management methods that react to the traffic dynamics, not including “drop-tail” typical of FCFS/FIFO queue management)
 
-ARP Address Resolution Protocol (a protocol above the link layer that resolves IPv4 addresses to MAC layer addresses, uses link layer broadcast addressing)
+ARP : Address Resolution Protocol (a protocol above the link layer that resolves IPv4 addresses to MAC layer addresses, uses link layer broadcast addressing)
 
 ARQ Automatic Repeat Request (the retransmission of information; usually after inferred loss)
 
@@ -86,9 +86,9 @@ AXFR Zone Transfer (full exchange of DNS zone information; uses TCP)
 
 B4 Bridging Broadband element (in DS-Lite, a router which encapsulates IPv4 traffic in IPv6 tunnels terminated at an AFTR, a B4 does not perform NAT functions)
 
-BACP Bandwidth Allocation Control Protocol (with PPP, a protocol for configuring BoD)
+BACP :Bandwidth Allocation Control Protocol (with PPP, a protocol for configuring BoD)
 
-BAP Bandwidth Allocation Protocol (a protocol used to configure links in a bundle for MPPP)
+BAP : Bandwidth Allocation Protocol (a protocol used to configure links in a bundle for MPPP)
 
 BCMCS Broadcast and Multicast Service Controller (in cellular networks, manages multicast)
 
@@ -106,13 +106,13 @@ BITW Bump In the Wire (option for implementing IPsec in the network)
 
 BL Bulk Leasequery (in DHCP, a request/response protocol to convey current lease information)
 
-BoD Bandwidth on Demand (ability to dynamically adjust available link bandwidth)
+BoD : Bandwidth on Demand (ability to dynamically adjust available link bandwidth)
 
 BOOTP Bootstrap Protocol (precursor to DHCP; used to configure hosts)
 
 BPDU Bridge PDU (PDUs used by STP; exchanged by switches and bridges)
 
-BPSK Binary Phase Shift Keying (modulating binary using two signal phases)
+BPSK : Binary Phase Shift Keying (modulating binary using two signal phases)
 
 BSD Berkeley Software Distribution (UC Berkeley’s version of UNIX, included the first widely used implementation of TCP/IP)
 
@@ -128,19 +128,19 @@ CA : Certificate Authority (organization responsible for generating and issuing 
 
 CALIPSO Common Architecture Label IPv6 Security Option (security labels for IP packets; not widely used)
 
-CBC Cipher Block Chaining (an encryption mode that uses the XOR operation to chain encrypted blocks together in an effort to resist re-arrangement attacks)
+CBC : Cipher Block Chaining (an encryption mode that uses the XOR operation to chain encrypted blocks together in an effort to resist re-arrangement attacks)
 
-CBCP Callback Control Protocol (in PPP, establishes a callback number)
+CBCP : Callback Control Protocol (in PPP, establishes a callback number)
 
 CCA : Clear Channel Assessment (802.11 PHY-layer mechanism that detects channel usage)
 
 CCITT Comité Consultatif International Téléphonique et Télégraphique (now ITU-T)
 
-CCM Counter mode with CBC Message Authentication Code (an authenticated encryption mode combining CTR mode encryption with CBC-MAC)
+CCM : Counter mode with CBC Message Authentication Code (an authenticated encryption mode combining CTR mode encryption with CBC-MAC)
 
-CCMP Counter Mode with CBC-MAC Protocol (encryption used with WPA2; from IEEE 802.11i; successor to WPA)
+CCMP : Counter Mode with CBC-MAC Protocol (encryption used with WPA2; from IEEE 802.11i; successor to WPA)
 
-CCP Compression Control Protocol (in PPP, established the compression methods to use)
+CCP : Compression Control Protocol (in PPP, established the compression methods to use)
 
 ccTLD Country Code TLD (a TLD based on the ISO3661-2 country code list)
 
@@ -154,7 +154,7 @@ CERTREQ Certificate Request (with IKE, payload indicating trust anchor as an ind
 
 CGA Cryptographically Generated Address (address generated based on a hash on a public key)
 
-CHAP Challenge-Handshake Authentication Protocol (protocol requiring a challenge to match a response; vulnerable to MITM attacks)
+CHAP : Challenge-Handshake Authentication Protocol (protocol requiring a challenge to match a response; vulnerable to MITM attacks)
 
 CIA confidentiality, integrity, and availability (principles of information security; the “CIA triad”)
 
@@ -178,7 +178,7 @@ CP Configuration Payload (with IKE, extensible structure for conveying configura
 
 CPS Certification Practice Statement (a CA’s policy statement about how certificates are issued or managed)
 
-CRC Cyclic Redundancy Check (mathematical functions used to check for bit errors)
+CRC : Cyclic Redundancy Check (mathematical functions used to check for bit errors)
 
 CRL Certificate Revocation List (a list of invalid certificates issued by a CA)
 
@@ -196,7 +196,7 @@ CSRG Computer Systems Research Group (developers of BSD UNIX at UC Berkeley)
 
 CTCP Compound TCP (a “scalable” TCP variant implemented in modern Windows systems that combines both delay-based and packet-loss based window adjustments)
 
-CTR Counter (an encryption mode that uses a counter value to impose a required order on encrypted blocks while permitting parallel execution of encryption or decryption on multiple blocks)
+CTR : Counter (an encryption mode that uses a counter value to impose a required order on encrypted blocks while permitting parallel execution of encryption or decryption on multiple blocks)
 
 CTS : Clear To Send (message authorizing sender of RTS to send)
 
@@ -272,7 +272,7 @@ DSACK Duplicate SACK (in TCP, a SACK variant that includes description of receiv
 
 DSCP DS Code Point (field value in packet indicating a particular forwarding behavior is desired)
 
-DSL Digital Subscriber Line (dedicated broadband data link over POTS line)
+DSL : Digital Subscriber Line (dedicated broadband data link over POTS line)
 
 DS-Lite Dual Stack Lite (a framework for IPv6-based service providers to provide access to dual stack or single stack clients using a combination of IPv4-in-IPv6 tunneling and NAT)
 
@@ -288,11 +288,11 @@ DUID DHCP Unique Identifier (value placed in DHCP request to match responses)
 
 DUP Duplicate (used in multiple context—e.g., DUP ACKs)
 
-EAP Extensible Authentication Protocol (framework supporting various authentication methods)
+EAP : Extensible Authentication Protocol (framework supporting various authentication methods)
 
 EAP-FAST EAP-Flexible Authentication via Security Tunneling (Cisco’s EAP method using TLS that replaces its earlier LEAP EAP method)
 
-EAPOL EAP over LAN (e.g., EAP over Ethernet as used in IEEE 802.1X)
+EAPOL : EAP over LAN (e.g., EAP over Ethernet as used in IEEE 802.1X)
 
 EAP-TTLS EAP-Tunneled Transport Layer Security (an EAP method based on earlier TLS EAP method, but requires only server side to obtain certificate)
 
@@ -326,7 +326,7 @@ ENUM E.164 to URI DDDS Application (a particular DDDS used to map E.164 telephon
 
 EP Enforcement Point (with PANA, point where access control policies are enforced)
 
-EQM Equal Modulation (using the same modulation scheme on different data streams simultaneously)
+EQM : Equal Modulation (using the same modulation scheme on different data streams simultaneously)
 
 ERE Eligible Rate Estimate (part of TCP Westwood+; estimate of the amount of bandwidth that could be used by a connection)
 
@@ -350,7 +350,7 @@ FCFS First Come, First Served (scheduling discipline with in-order service; no p
 
 FCS : Frame Check Sequence (general term for bits used to check for bit errors)
 
-FEC Forward Error Correction (using redundant bits to correct errors in data bits)
+FEC : Forward Error Correction (using redundant bits to correct errors in data bits)
 
 FIFO First In, First Out (queue management discipline with in-order service; no re-arrangements)
 
@@ -372,7 +372,7 @@ GDOI Group Domain of Interpretation (in IPsec, a group key management protocol b
 
 GENA General Event Notification Architecture (an XML-based notification framework using HTTP over multicast UDP; used with UPnP)
 
-GI Guard Interval (in communications engineering, minimum time between transmissions used to avoid inter-symbol interference)
+GI : Guard Interval (in communications engineering, minimum time between transmissions used to avoid inter-symbol interference)
 
 GKM Group Key Management (in IPsec, methods to distribute key material to a group in order to support group SA formation)
 
@@ -384,7 +384,7 @@ GMRP Generic Multicast Registration Protocol (replaced by MMRP)
 
 GPAD Group PAD (with IPsec, abstraction of a database containing authentication data for all GCKS entities)
 
-GRE Generic Routing Encapsulation (generic encapsulation within IP datagrams)
+GRE : Generic Routing Encapsulation (generic encapsulation within IP datagrams)
 
 GSA Group Security Association (in IPsec, an SA established among group members using a multicast protocol)
 
@@ -404,7 +404,7 @@ HAIO Home Agent Information Option (in ICMPv6, an option supporting MIPv6 to ind
 
 HCF : Hybrid Coordination Function (coordinating function supporting both priority and contention-based 802.11 channel access)
 
-HDLC High-level Data Link Control (a popular ISO standard data link protocol, the basis for the most popular variant of PPP)
+HDLC : High-level Data Link Control (a popular ISO standard data link protocol, the basis for the most popular variant of PPP)
 
 HELD HTTP-Enabled Location Delivery (a protocol for delivering LCI using HTTP/TCP/IP)
 
@@ -420,21 +420,21 @@ HoT Home Test (in an RR check, message sent to MN via HA resulting in MN obtaini
 
 HoTI Home Test Init (in an RR check, triggers receiver to send a HoT message)
 
-HSPA High-Speed Packet Access (3GPP wireless broadband standard; an evolution of WCDMA)
+HSPA : High-Speed Packet Access (3GPP wireless broadband standard; an evolution of WCDMA)
 
 HSTCP Highspeed TCP (a “scalable” TCP variant in which CWND is adjusted based in part on its current value; designed to operate more effectively in high capacity environments)
 
-HT High Throughput (higher speeds associated with the IEEE 802.11n standard)
+HT : High Throughput (higher speeds associated with the IEEE 802.11n standard)
 
-HTML Hyper-Text Markup Language (the basic language of the WWW)
+HTML : Hyper-Text Markup Language (the basic language of the WWW)
 
-HTTP Hyper-Text Transfer Protocol (primary protocol of the WWW; often carries HTML)
+HTTP : Hyper-Text Transfer Protocol (primary protocol of the WWW; often carries HTML)
 
 HTTPMU HTTP using UDP (a method for carrying HTTP traffic on UDP using multicast addressing; used to carry SSDP messages in UPnP)
 
-HTTPS HTTP over SSL/TLS (standard for secure WWW exchange)
+HTTPS : HTTP over SSL/TLS (standard for secure WWW exchange)
 
-HWRP Hybrid Wireless Routing Protocol (routing protocol proposed for IEEE 802.11s)
+HWRP : Hybrid Wireless Routing Protocol (routing protocol proposed for IEEE 802.11s)
 
 IA Identity Association (in DHCP, a collection of addresses)
 
@@ -450,7 +450,7 @@ ICANN Internet Corporation for Assigned Names and Numbers (non-profit governing 
 
 ICE Interactive Connectivity Establishment (a framework for performing NAT traversal, which entails trying direct connections, STUN, and finally TURN to enable communication in the presence of NATs)
 
-ICMP Internet Control Message Protocol (an information and error reporting protocol considered part of IP)
+ICMP : Internet Control Message Protocol (an information and error reporting protocol considered part of IP)
 
 ICS Internet Connection Sharing (alternative name for NAT; used with Microsoft Windows)
 
@@ -472,7 +472,7 @@ IGMP Internet Group Message Protocol (a protocol to manage IPv4 multicast groups
 
 IHL Internet Header Length (IPv4 header field indicating the header length in 32-bit words)
 
-IID Interface Identifier (numeric identifier usually based on MAC address; used when choosing IPv6 addresses, but not used for this purpose when privacy extensions are enabled)
+IID : Interface Identifier (numeric identifier usually based on MAC address; used when choosing IPv6 addresses, but not used for this purpose when privacy extensions are enabled)
 
 IKE Internet Key Exchange (part of IPsec; a protocol to dynamically establish security associations including keys and operating parameters)
 
@@ -486,13 +486,13 @@ IND Inverse Neighbor Discovery (provides RARP-like function for IPv6)
 
 IP : Internet Protocol (standard best-effort Internet packet protocol implementing a common abstract datagram on any link layer network)
 
-IPCP IP Control Protocol (in PPP, an NCP used to configure an IPv4 network link)
+IPCP : IP Control Protocol (in PPP, an NCP used to configure an IPv4 network link)
 
 IPG Inter-Packet Gap (minimum spacing between frames in a MAC protocol)
 
 IPsec IP Security (a framework for securing IP traffic, including the IKE, AH, and ESP protocols)
 
-IPV6CP IPv6 Control Protocol (in PPP, an NCP used to configure an IPv6 network link)
+IPV6CP : IPv6 Control Protocol (in PPP, an NCP used to configure an IPv6 network link)
 
 IRIS Internet Registry Information Service (database containing information relating address ranges, associated AS numbers, contact information, and name servers)
 
@@ -530,13 +530,13 @@ KE Key Exchange (with IKE, payload used for establishing keys; generally uses DH
 
 KSK Key Signing Key (a key used with DNSSEC for signing other keys; typically has the SEP bit set)
 
-L2TP Layer 2 Tunneling Protocol (IETF standard link layer tunneling protocol)
+L2TP : Layer 2 Tunneling Protocol (IETF standard link layer tunneling protocol)
 
 LACP Link Aggregation Control Protocol (part of IEEE 802.1AX for managing link aggregates)
 
 LAG Link Aggregation Group (set of links acting together as one virtual higher-performance link)
 
-LAN Local Area Network (a network within a small geographic area such as a single site, office, or home)
+LAN : Local Area Network (a network within a small geographic area such as a single site, office, or home)
 
 LCG Linear Congruential Generator (a deterministic type of popular PRNG, which is not a CSPRNG)
 
@@ -546,7 +546,7 @@ LCI Logical Channel Identifier (in circuit switching, identifier for a virtual c
 
 LCN Logical Channel Number (in circuit switching, number of a virtual channel)
 
-LCP Link Control Protocol (in PPP, used to establish a link)
+LCP : Link Control Protocol (in PPP, used to establish a link)
 
 LDAP Lightweight Directory Access Protocol (a lookup protocol based on the ISO X.500 DAP protocol)
 
@@ -568,9 +568,9 @@ LNP Local Network Protection (a collection of techniques suggested for use in IP
 
 LoST Location-to-Service Translation (a framework for offering services based on location—e.g., indication of the nearest hospital)
 
-LQR Link Quality Reports (in PPP, reports of link quality measurements including number of packets received, sent, and rejected due to errors)
+LQR : Link Quality Reports (in PPP, reports of link quality measurements including number of packets received, sent, and rejected due to errors)
 
-LTE Long-Term Evolution (3GPP wireless broadband standard; an evolution of HSPA)
+LTE : Long-Term Evolution (3GPP wireless broadband standard; an evolution of HSPA)
 
 LW-MLD Lightweight MLD (variant of MLD with simpler join/leave semantics)
 
@@ -580,7 +580,7 @@ MAC : Message Authentication Code (a mathematical function used to help verify t
 
 MAN Metropolitan Area Network (a network spanning a modest geographical extent, such as a city or region)
 
-MCS Modulation and Coding Scheme (combination of modulation and coding, many combinations are available in 802.11n)
+MCS : Modulation and Coding Scheme (combination of modulation and coding, many combinations are available in 802.11n)
 
 MD Message Digest Algorithms (mathematical functions giving a short numeric “fingerprint” for a larger message)
 
@@ -592,11 +592,11 @@ MII Media-Independent Interface (in hardware, the interface between the MAC impl
 
 MIME Multipurpose Internet Mail Extensions (method for labeling and encoding various object types in electronic mail)
 
-MIMO Multiple Input, Multiple Output (wireless antenna scheme with multiple antennas offering performance superior to single-antenna systems but requiring more sophisticated signal processing)
+MIMO : Multiple Input, Multiple Output (wireless antenna scheme with multiple antennas offering performance superior to single-antenna systems but requiring more sophisticated signal processing)
 
 MIP Mobile IP (IP addressing and routing extensions to support movement of network attachment point without address change)
 
-MITM Man-in-the-Middle attack (the typical form of an MSM attack, carried out by an interposer)
+MITM : Man-in-the-Middle attack (the typical form of an MSM attack, carried out by an interposer)
 
 MLD Multicast Listener Discovery (used by IPv6 routers to discover multicast receivers on a link; provides similar capabilities as IGMP for IPv4)
 
@@ -612,7 +612,7 @@ MODP Modulo-P groups (groups based on modular arithmetic, in the abstract algebr
 
 MoS Mobility Services (portion of the IEEE 802.21 standard supporting media-independent handoff services)
 
-MP Mesh Point (name of a node in IEEE 802.11s operating in a mesh configuration)
+MP : Mesh Point (name of a node in IEEE 802.11s operating in a mesh configuration)
 
 MP, MPPP, MLP, MLPPP Multi-link PPP (using PPP over multiple links simultaneously)
 
@@ -622,19 +622,19 @@ MPE Manchester Phase Encoding (bit encoding scheme where a voltage transition in
 
 MPLS Multi-Protocol Label Switching (architecture that switches frames based on tag values, not IP addresses)
 
-MPPC Microsoft’s Point-to-Point Compression (used with PPP)
+MPPC : Microsoft’s Point-to-Point Compression (used with PPP)
 
 MPPE Microsoft’s Point-to-Point Encryption (used with PPP)
 
-MPV Maximum Pad Value (in PPP, maximum number of pad bytes)
+MPV : Maximum Pad Value (in PPP, maximum number of pad bytes)
 
 MRD Multicast Router Discovery (protocol to discover on-link multicast router neighbors)
 
 MRP Multiple Registration Protocol (IEEE 802.1ak standard for registering attributes)
 
-MRRU Multilink Maximum Received Reconstructed Unit (MRU after reconstruction from parts on multiple MP links)
+MRRU : Multilink Maximum Received Reconstructed Unit (MRU after reconstruction from parts on multiple MP links)
 
-MRU Maximum Receive Unit (largest packet/message size a receiver will accept)
+MRU : Maximum Receive Unit (largest packet/message size a receiver will accept)
 
 MS-CHAP Microsoft’s Challenge-Handshake Authentication Protocol (an authentication protocol involving a request/replay and validated response, with two versions: MS-CHAPv1 and MS-CHAPv2)
 
@@ -644,11 +644,11 @@ MSK Master Session Key (a key derived after an EAP session using methods support
 
 MSL Maximum Segment Lifetime (in TCP, the maximum time a segment can exist in the network before being determined invalid)
 
-MSM Message Stream Modification (active modification of messages; usually a type of attack)
+MSM : Message Stream Modification (active modification of messages; usually a type of attack)
 
 MSS Maximum Segment Size (in TCP, the largest segment a receiver is willing to receive; usually provided in an option during connection establishment)
 
-MTU Maximum Transmission Unit (maximum frame size a network will transport)
+MTU : Maximum Transmission Unit (maximum frame size a network will transport)
 
 MVRP Multiple VLAN Registration Protocol (part of MRP used for registering VLANs)
 
@@ -656,7 +656,7 @@ MX Mail Exchanger (DNS RR indicating a priority order of hosts willing to use SM
 
 NAC Network Access Control (process employed to determine whether a device should receive access rights to use a network)
 
-NACK Negative Acknowledgment (an indication of non-receipt or non-acceptance)
+NACK : Negative Acknowledgment (an indication of non-receipt or non-acceptance)
 
 NAP Network Access Protection (Microsoft’s variant of NAC; first available with Windows Server 2008)
 
@@ -676,11 +676,11 @@ NAT-PT NAT with Protocol Translation (now-deprecated approach to IPv4/IPv6 trans
 
 NAV : Network Allocation Vector (time delay before sending due to other stations’ channel use in 802.11 DCF)
 
-NBMA Non-Broadcast Multiple Access (multi-user networks lacking broadcasting capability)
+NBMA : Non-Broadcast Multiple Access (multi-user networks lacking broadcasting capability)
 
 NCoA New Care-of Address (in FMIPv6, CoA to be obtained from NAR)
 
-NCP Network Control rotocol (in PPP, used to establish the network-layer protocol)
+NCP : Network Control rotocol (in PPP, used to establish the network-layer protocol)
 
 ND, NDP Neighbor Discovery (IPv6 method to discovery and obtain MAC address of on-link neighbors; works like ARP; implemented as part of ICMPv6)
 
@@ -714,11 +714,11 @@ NUD Neighbor Unreachability Detection (in IPv6 ND, to determine if a neighbor ca
 
 OCSP Online Certificate Status Protocol (a protocol for checking the validity of a certificate; an alternative to obtaining a CRL)
 
-OFDM Orthogonal Frequency Division Multiplexing (a sophisticated modulation scheme in which subcarriers of multiple frequences are simultaneously modulated in a specified bandwidth to achieve high throughput; used by DSL, 802.11a/g/n, 802.16e, and advanced cellular data standards including LTE)
+OFDM : Orthogonal Frequency Division Multiplexing (a sophisticated modulation scheme in which subcarriers of multiple frequences are simultaneously modulated in a specified bandwidth to achieve high throughput; used by DSL, 802.11a/g/n, 802.16e, and advanced cellular data standards including LTE)
 
 OID Object Identifier (numeric identifier of a digital object; used in certificate encodings)
 
-OLSR Optimized Link State Routing (a standard protocol for on-demand routing in ad-hoc networks)
+OLSR : Optimized Link State Routing (a standard protocol for on-demand routing in ad-hoc networks)
 
 OOB Out Of Band (information delivered outside a primary communication channel)
 
@@ -740,25 +740,25 @@ PAD Peer Authentication Database (with IPsec, abstraction of database containing
 
 PANA Protocol for Carrying Authentication for Network Access (UDP/IP carrier for EAP)
 
-PAP Password Authentication Protocol (protocol that carries cleartext password; vulnerable to MITM or eavesdroppers)
+PAP : Password Authentication Protocol (protocol that carries cleartext password; vulnerable to MITM or eavesdroppers)
 
 PAWS Protection Against Wrapped Sequence Numbers (in TCP, method using TSOPT values to notice sequence number wrapping)
 
 PCF : Point Coordinating Function (combined contention-free and contention-based MAC protocol for 802.11; not widely used)
 
-PCO Phased Coexistence Operation (method for an 802.11 AP to switch channel widths for less negative impact on legacy equipment)
+PCO : Phased Coexistence Operation (method for an 802.11 AP to switch channel widths for less negative impact on legacy equipment)
 
 PCoA Previous Care-of Address (in FMIPv6, current or previous CoA obtained from PAR)
 
 PCP Port Control Protocol (current-generation draft IETF protocol for configuring NATs including SPNATs and NAT64)
 
-PDU Protocol Data Unit (describes a message at some protocol layer; sometimes used interchangeably and informally with packet, frame, datagram, segment, or message)
+PDU : Protocol Data Unit (describes a message at some protocol layer; sometimes used interchangeably and informally with packet, frame, datagram, segment, or message)
 
 PEAP Protected Extensible Authentication Protocol (a popular method to encapsulate EAP in TLS; similar to EAP-TTLS)
 
 PEN Private Enterprise Number (numbers assigned by IANA usable by an enterprise in forming OIDs)
 
-PFC Protocol Field Compression (in PPP, eliminating the Protocol field to reduce overhead)
+PFC : Protocol Field Compression (in PPP, eliminating the Protocol field to reduce overhead)
 
 PFS Perfect Forward Secrecy (in public key cryptography, the property by which compromise of one key leads at most to the compromise of data encrypted with that key and not other data or keys)
 
@@ -780,33 +780,33 @@ PKI Public Key Infrastructure (system for managing and distributing public keys)
 
 PLCP : Physical Layer Convergence Procedure (802.11 method for encoding and determining frame type and radio parameters)
 
-PMTU Path MTU (minimum MTU across links on the path from sender to receiver)
+PMTU : Path MTU (minimum MTU across links on the path from sender to receiver)
 
-PMTUD PMTU Discovery (process of determining the PMTU; usually depends on ICMP PTB messages)
+PMTUD : PMTU Discovery (process of determining the PMTU; usually depends on ICMP PTB messages)
 
 PNAC Port-Based NAC (a version of NAC wherein the physical port of attachment is used in making an authorization decision)
 
-PoE Power over Ethernet (carries device power over Ethernet wiring)
+PoE : Power over Ethernet (carries device power over Ethernet wiring)
 
-POTS Plain Old Telephone Service (conventional analog telephone service)
+POTS : Plain Old Telephone Service (conventional analog telephone service)
 
-PPP Point-to-Point Protocol (a link-layer configuration and data encapsulating protocol capable of carrying multiple network layer protocols and using multiple underlying physical links)
+PPP : Point-to-Point Protocol (a link-layer configuration and data encapsulating protocol capable of carrying multiple network layer protocols and using multiple underlying physical links)
 
 PPPoE PPP over Ethernet (methods to establish a PPP association over an Ethernet link)
 
-PPTP Point-to-Point Tunneling Protocol (Microsoft’s link layer tunneling protocol)
+PPTP : Point-to-Point Tunneling Protocol (Microsoft’s link layer tunneling protocol)
 
 PRF Pseudorandom Function Family (a set of functions that cannot be distinguished from truly random functions using a polynomial-time algorithm; also sometimes used less formally to refer to a single such function)
 
 PRNG, PRG Pseudo-Random Generator (a mathematical function used to compute a series of random-appearing values)
 
-PSK Pre-Shared Key (pre-placing encryption keys; no dynamic key exchange protocol used)
+PSK : Pre-Shared Key (pre-placing encryption keys; no dynamic key exchange protocol used)
 
 PSM : Power Save Mode (a mode of 802.11 where devices may “sleep” when not busy and poll to receive their information from an AP at a later time)
 
 PSMP : Power-Save Multi-Poll (bi-directional version of APSD, part of 802.11n)
 
-PTB Packet Too Big (a ICMP Destination Unreachable Fragmentation Required or IPv6 Packet Too Big message indicating a packet is too large for the next-hop MTU size)
+PTB : Packet Too Big (a ICMP Destination Unreachable Fragmentation Required or IPv6 Packet Too Big message indicating a packet is too large for the next-hop MTU size)
 
 QAM Quadrature Amplitude Modulation (combination of phase and amplitude modulation)
 
@@ -818,7 +818,7 @@ QI Query Interval (in IGMP and MLD, time between general queries)
 
 QoS : Quality of Service (general term describing how traffic can be handled differently, usually with better or worse latency or drop precedence, based on configuration parameters)
 
-QPSK Quadrature Phase Shift Keying (typically, modulating two bits per symbol typically using four signal phases, although more advanced versions with more bits per symbol are possible)
+QPSK : Quadrature Phase Shift Keying (typically, modulating two bits per symbol typically using four signal phases, although more advanced versions with more bits per symbol are possible)
 
 QQI Querier’s Query Interval (in IGMP and MLD, time between sending general query messages; current non-querier multicast routers adopt the most recently received QQI value as their QI value)
 
@@ -834,13 +834,13 @@ QSTA : QoS STA (an 802.11 STA supporting QoS capabilities)
 
 RA Router Advertisement (message indicating presence of an on-link router neighbor; uses ICMP)
 
-RADIUS Remote Authentication Dial-In User Service protocol (a popular protocol for carrying AAA data)
+RADIUS : Remote Authentication Dial-In User Service protocol (a popular protocol for carrying AAA data)
 
 RAIO Relay Agent Information Option (in DHCPv6, an option used by relays to insert various bits of information)
 
-RARP Reverse ARP (protocol providing network layer to MAC layer address mappings)
+RARP : Reverse ARP (protocol providing network layer to MAC layer address mappings)
 
-RAS Remote Access Server (a server that handles remote users—authentication, access control, etc.)
+RAS : Remote Access Server (a server that handles remote users—authentication, access control, etc.)
 
 RC4 Rivest Cipher #4 (a popular symmetric key encryption scheme designed by Ron Rivest)
 
@@ -852,7 +852,7 @@ RDNSS Recursive DNS Server (used in RAs; indicates address of DNS server)
 
 RED Random Early Detection (an AQM scheme that marks or drops packets with increasing probability when persistent congestion appears to be growing)
 
-RFC Request for Comments (documents published by IETF; some are standards)
+RFC : Request for Comments (documents published by IETF; some are standards)
 
 RGMP Router-port Group Management Protocol (Cisco’s protocol to enable IGMP snooping)
 
@@ -868,7 +868,7 @@ RO Route Optimization (improving routes from indirect “dogleg” paths used in
 
 ROAD Running Out of Address Space (a problem motivating the creation of IPv6 and resulting in the creating of CIDR)
 
-ROHC Robust Header Compression (current-generation standards for protocol header compression)
+ROHC : Robust Header Compression (current-generation standards for protocol header compression)
 
 RP Rendezvous Point (used with multicast routing to exchange group information)
 
@@ -890,9 +890,9 @@ RS Router Solicitation (an ICMP message that induces a router to produce a respo
 
 RSA Rabin, Shamir, Adelman (the most popular public key cryptography algorithm)
 
-RSN Robust Security Network (improved security in IEEE 802.11i/WPA; included in 802.11 standard)
+RSN : Robust Security Network (improved security in IEEE 802.11i/WPA; included in 802.11 standard)
 
-RSNA RSN Association (full use/implementation of RSN)
+RSNA : RSN Association(Access?) (full use/implementation of RSN)
 
 RST Reset (a TCP header bit and segment type that causes a TCP connection abort)
 
@@ -918,7 +918,7 @@ SACK Selective Acknowledgment (in TCP, an option indicating correctly received o
 
 SAD Security Association Database (in IPsec, abstraction of database containing information on each active SA; logically indexed by SPI)
 
-SAE Simultaneous Authentication of Equals (form of authentication used with 802.11s)
+SAE : Simultaneous Authentication of Equals (form of authentication used with 802.11s)
 
 SAP Session Announcement Protocol (carries experimental multicast session announcements; see also SDP)
 
@@ -930,7 +930,7 @@ SCVP Server-Based Certificate Verification Protocol (a protocol supporting DPD a
 
 SDID Signing Domain Identifier (with DKIM, name for the domain of the signer)
 
-SDLC Synchronous Data Link Control (a precursor to HDLC, the link layer of SNA)
+SDLC : Synchronous Data Link Control (a precursor to HDLC, the link layer of SNA)
 
 SDO : Standards-Defining Organization (including IEEE, IETF, ISO, ITU, 3GPP, 3GPP2)
 
@@ -960,7 +960,7 @@ SMSS Sender’s MSS (the MSS for a connection as viewed by the sender)
 
 SMTP Simple Mail Transfer Protocol (a protocol to carry e-mail in transit among mail transfer agents)
 
-SNA Systems Network Architecture (IBM’s network architecture)
+SNA : Systems Network Architecture (IBM’s network architecture)
 
 SNAP Subnetwork Access Protocol (IEEE terminology for 802.2 encapsulation; rare for TCP/IP networks)
 
@@ -990,13 +990,13 @@ SSH : Secure Shell Protocol (secure remote login/execution protocol; also suppor
 
 SSID : Service Set Identifier (802.11 network name)
 
-SSL Secure Sockets Layer (encrypted and integrity-protected layer above TCP; precursor to TLS)
+SSL : Secure Sockets Layer (encrypted and integrity-protected layer above TCP; precursor to TLS)
 
 SSM Single-Source Multicast (multicast wherein only a single party can source traffic to a particular group)
 
 STA : Station (IEEE 802.11 terminology for an access point or associated wireless host)
 
-STP Spanning Tree Protocol (protocol used among bridges and switches to avoid loops)
+STP : Spanning Tree Protocol (protocol used among bridges and switches to avoid loops)
 
 STUN Session Traversal Utilities for NAT (a client/server protocol for helping to fix the address and port number of a traffic flow when passing through a NAT)
 
@@ -1018,11 +1018,11 @@ TFRC TCP Friendly Rate Control (methods to control the sending rate of a protoco
 
 TFTP Trivial File Transfer Protocol (UDP/IP-based simple transfer protocol)
 
-TKIP Temporal Key Integrity Protocol (replaced the WEP encryption algorithm for WPA)
+TKIP : Temporal Key Integrity Protocol (replaced the WEP encryption algorithm for WPA)
 
 TLD Top-Level Domain (a top-level domain name such as EDU, COM, UK, ZA)
 
-TLS Transport Layer Security (based on the SSL protocol developed by Netscape)
+TLS : Transport Layer Security (based on the SSL protocol developed by Netscape)
 
 TLV Type/Length Value (used in protocols; indicates a type, length of variable-length value, and the value)
 
@@ -1054,11 +1054,11 @@ TXT : Text (DNS RR carrying descriptive text; used by DKIM)
 
 UBM Unicast Prefix-based Multicast addressing (deriving multicast addresses based on assigned unicast prefixes)
 
-UDL Unidirectional Link (link providing communication in only one direction)
+UDL : Unidirectional Link (link providing communication in only one direction)
 
 UDP : User Datagram Protocol (a best-effort message protocol with message boundaries and lacking congestion or flow control)
 
-UEQM Unequal Modulation (using different modulation schemes on different data streams simultaneously)
+UEQM : Unequal Modulation (using different modulation schemes on different data streams simultaneously)
 
 ULA Unique Local IPv6 Unicast Addresses (private addresses used with IPv6, allocated from the fc00::/7 prefix)
 
@@ -1094,13 +1094,13 @@ VLSM Variable-Length Subnet Masks (proximal use of subnet masks of differing len
 
 VoIP : Voice over IP (the carriage of voice traffic over IP networks, usually involves SIP signaling)
 
-VPN Virtual Private Network (virtually isolated network; often encrypted)
+VPN : Virtual Private Network (virtually isolated network; often encrypted)
 
 W3C World Wide Web Consortium (SDO defining web standards such as XML)
 
 WAN Wide Area Network (a network connecting geographically distributed sites; usually involving multiple administrative authorities)
 
-WEP Wired Equivalent Privacy (original WiFi encryption; found to be catastrophically weak)
+WEP : Wired Equivalent Privacy (original WiFi encryption; found to be catastrophically weak)
 
 WESP Wrapped ESP (in IPsec, a method to prepend ESP with a header to indicate if the following traffic is encrypted or only authenticated; useful for inspection by middleboxes)
 
@@ -1116,7 +1116,7 @@ WMM : Wi-Fi Multimedia (subset of 802.11e QoS functions now available in 802.11n
 
 WoL : Wake on LAN (method to remain in “sleep” mode until a particular packet is received)
 
-WPA WiFi Protected Access (802.11 encryption method)
+WPA : WiFi Protected Access (802.11 encryption method)
 
 WPAD Web Proxy Autodiscovery Protocol (a protocol to discover the presence of a proximate WWW proxy)
 
