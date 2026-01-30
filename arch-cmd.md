@@ -733,7 +733,7 @@ Connecting to 10.0.0.3...
 Escape character is ’^]’.
 ```
 
-On Host
+On Host, set up a temporary server wich we will call.
 
 ```sh
 python3 -m http.server 8000 --bind 0.0.0.0
@@ -770,4 +770,652 @@ linux$ telnet 10.0.2.2 8000
 Trying 10.0.2.2...
 Connected to 10.0.2.2.
 Escape character is '^]'
+```
+
+### 4.5.2. ARP Request to a Nonexistent Host
+
+```sh
+Linux% date ; telnet 10.0.0.99 ; date
+Fri Jan 29 14:46:33 PST 2010
+Trying 10.0.0.99...
+telnet: connect to address 10.0.0.99: No route to host
+Fri Jan 29 14:46:36 PST 2010
+Linux% arp -a
+? (10.0.0.99) at <incomplete> on eth0
+Linux% tcpdump –n arp
+1 21:12:07.440845 arp who-has 10.0.0.99 tell 10.0.0.56
+2 21:12:08.436842 arp who-has 10.0.0.99 tell 10.0.0.56
+3 21:12:09.436836 arp who-has 10.0.0.99 tell 10.0.0.56
+```
+
+Terminal A
+
+```sh
+linux$ sudo tshark -i enp0s8 -Y arp
+Running as user "root" and group "root". This could be dangerous.
+Capturing on 'enp0s8'
+    1 0.000000000 52:54:00:12:34:56 → Broadcast    ARP 42 Who has 10.0.2.99? Tell 10.0.2.15
+    2 1.028782047 52:54:00:12:34:56 → Broadcast    ARP 42 Who has 10.0.2.99? Tell 10.0.2.15
+    3 2.052803931 52:54:00:12:34:56 → Broadcast    ARP 42 Who has 10.0.2.99? Tell 10.0.2.15
+3 packets captured
+```
+
+Terminal B
+
+```sh
+linux$ sudo ip neighbor flush all
+linux$ date; telnet 10.0.2.99; date
+Tue Jan 20 02:30:16 PM -03 2026
+Trying 10.0.2.99...
+telnet: Unable to connect to remote host: No route to host
+Tue Jan 20 02:30:19 PM -03 2026
+linux$ ip neighbor show
+10.0.2.99 dev enp0s8 FAILED
+10.0.4.2 dev enp0s11 lladdr 52:55:0a:00:04:02 REACHABLE
+10.0.3.2 dev enp0s12 lladdr 52:55:0a:00:03:02 REACHABLE
+```
+
+## 4.8. Gratuitous ARP and Address Conflict Detection (ACD)
+
+```sh
+Linux% tcpdump -e -n arp
+1      0.0 0:0:c0:6f:2d:40 ff:ff:ff:ff:ff:ff arp 60:
+           arp who-has 10.0.0.56 tell 10.0.0.56
+```
+
+On archlinux this is disable by default.
+
+```sh
+linux$ sysctl net.ipv4.conf.enp0s8.arp_notify
+net.ipv4.conf.enp0s8.arp_notify = 0
+```
+
+What you can see is the IPV6 version of this.
+
+Terminal A
+
+```sh
+linux$ sudo tshark -i enp0s8 -Y "arp || icmpv6.type == 135"
+Running as user "root" and group "root". This could be dangerous.
+Capturing on 'enp0s8'
+   13 0.875991960           :: → ff02::1:ff12:3456 ICMPv6 86 Neighbor Solicitation for fe80::5054:ff:fe12:3456
+   27 2.755948956           :: → ff02::1:ff12:3456 ICMPv6 86 Neighbor Solicitation for fec0::5054:ff:fe12:3456
+2 packets captured
+```
+
+Terminal B
+
+```sh
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+    inet 10.0.2.15/24 metric 100 scope global dynamic enp0s8
+       valid_lft 86076sec preferred_lft 86076sec
+    inet6 fec0::5054:ff:fe12:3456/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86168sec preferred_lft 14168sec
+    inet6 fe80::5054:ff:fe12:3456/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 85124sec preferred_lft 85124sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 85916sec preferred_lft 13916sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:58 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123458
+    inet 10.0.3.15/24 metric 100 brd 10.0.3.255 scope global dynamic enp0s12
+       valid_lft 85124sec preferred_lft 85124sec
+    inet6 fec0::5054:ff:fe12:3458/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86312sec preferred_lft 14312sec
+    inet6 fe80::5054:ff:fe12:3458/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+linux$ sudo ip link set enp0s8 down
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 85098sec preferred_lft 85098sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 85890sec preferred_lft 13890sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:58 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123458
+    inet 10.0.3.15/24 metric 100 brd 10.0.3.255 scope global dynamic enp0s12
+       valid_lft 85098sec preferred_lft 85098sec
+    inet6 fec0::5054:ff:fe12:3458/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86286sec preferred_lft 14286sec
+    inet6 fe80::5054:ff:fe12:3458/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+linux$ sudo ip link set enp0s8 up
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s8
+       valid_lft 86398sec preferred_lft 86398sec
+    inet6 fec0::5054:ff:fe12:3456/64 scope site tentative dynamic mngtmpaddr noprefixroute
+       valid_lft 86400sec preferred_lft 14400sec
+    inet6 fe80::5054:ff:fe12:3456/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 85088sec preferred_lft 85088sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 85880sec preferred_lft 13880sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:58 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123458
+    inet 10.0.3.15/24 metric 100 brd 10.0.3.255 scope global dynamic enp0s12
+       valid_lft 85088sec preferred_lft 85088sec
+    inet6 fec0::5054:ff:fe12:3458/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86275sec preferred_lft 14275sec
+    inet6 fe80::5054:ff:fe12:3458/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+```
+
+# 5. The Internet Protocol (IP)
+## 5.3. IPv6 Extension Headers
+### 5.3.2. Routing Header
+
+RH0 is deprecated, you cannot do it with ping anymore, you can do something like
+it.
+
+```sh
+C:\> ping6 -r -s 2001:db8::100 2001:db8::1
+```
+
+Terminal A set up the monitoring.
+
+On the result on Frame 63 what we care about is the part of "Options: (40 bytes), Record Route"
+which show our success at adding a Route, on Frame 70 we see the response to a deprecated option,
+the "Options:" part was dropped.
+
+```sh
+linux$ sudo tshark -i enp0s12 -V -Y "icmp"
+Running as user "root" and group "root". This could be dangerous.
+Capturing on 'enp0s12'
+Frame 63: Packet, 138 bytes on wire (1104 bits), 138 bytes captured (1104 bits) on interface enp0s12, id 0
+    Section number: 1
+    Interface id: 0 (enp0s12)
+        Interface name: enp0s12
+    Encapsulation type: Ethernet (1)
+    Arrival Time: Jan 23, 2026 14:32:00.352052573 -03
+    UTC Arrival Time: Jan 23, 2026 17:32:00.352052573 UTC
+    Epoch Arrival Time: 1769189520.352052573
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 4.576166 milliseconds]
+    [Time since reference or first frame: 392.542161 milliseconds]
+    Frame Number: 63
+    Frame Length: 138 bytes (1104 bits)
+    Capture Length: 138 bytes (1104 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: eth:ethertype:ip:icmp:data]
+    Character encoding: ASCII (0)
+Ethernet II, Src: 52:54:00:12:34:58 (52:54:00:12:34:58), Dst: 52:55:0a:00:03:02 (52:55:0a:00:03:02)
+    Destination: 52:55:0a:00:03:02 (52:55:0a:00:03:02)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Source: 52:54:00:12:34:58 (52:54:00:12:34:58)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Type: IPv4 (0x0800)
+    [Stream index: 0]
+Internet Protocol Version 4, Src: 10.0.3.15, Dst: 8.8.8.8
+    0100 .... = Version: 4
+    .... 1111 = Header Length: 60 bytes (15)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+        0000 00.. = Differentiated Services Codepoint: Default (0)
+        .... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+    Total Length: 124
+    Identification: 0xcbb0 (52144)
+    010. .... = Flags: 0x2, Don't fragment
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    ...0 0000 0000 0000 = Fragment Offset: 0
+    Time to Live: 64
+    Protocol: ICMP (1)
+    Header Checksum: 0x1294 [validation disabled]
+    [Header checksum status: Unverified]
+    Source Address: 10.0.3.15
+    Destination Address: 8.8.8.8
+    Options: (40 bytes), Record Route
+        IP Option - No-Operation (NOP)
+            Type: 1
+                0... .... = Copy on fragmentation: No
+                .00. .... = Class: Control (0)
+                ...0 0001 = Number: No-Operation (NOP) (1)
+        IP Option - Record Route (39 bytes)
+            Type: 7
+                0... .... = Copy on fragmentation: No
+                .00. .... = Class: Control (0)
+                ...0 0111 = Number: Record route (7)
+            Length: 39
+            Pointer: 8
+            Recorded Route: 10.0.3.15
+            Empty Route: 0.0.0.0 <- (next)
+            Empty Route: 0.0.0.0
+            Empty Route: 0.0.0.0
+            Empty Route: 0.0.0.0
+            Empty Route: 0.0.0.0
+            Empty Route: 0.0.0.0
+            Empty Route: 0.0.0.0
+            Empty Route: 0.0.0.0
+    [Stream index: 1]
+Internet Control Message Protocol
+    Type: Echo (ping) request (8)
+    Code: 0
+    Checksum: 0x3ef3 [correct]
+    [Checksum Status: Good]
+    Identifier (BE): 51903 (0xcabf)
+    Identifier (LE): 49098 (0xbfca)
+    Sequence Number (BE): 1 (0x0001)
+    Sequence Number (LE): 256 (0x0100)
+    ICMP Data: 90b0736900000000265f050000000000101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334353637
+        Timestamp from icmp data: Jan 23, 2026 14:32:00.352038000 -03
+        [Timestamp from icmp data (relative): 14.573 microseconds]
+        Data (40 bytes)
+
+0000  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0010  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0020  30 31 32 33 34 35 36 37                           01234567
+            Data: 101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334353637
+            [Length: 40]
+
+Frame 70: Packet, 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface enp0s12, id 0
+    Section number: 1
+    Interface id: 0 (enp0s12)
+        Interface name: enp0s12
+    Encapsulation type: Ethernet (1)
+    Arrival Time: Jan 23, 2026 14:32:00.373228725 -03
+    UTC Arrival Time: Jan 23, 2026 17:32:00.373228725 UTC
+    Epoch Arrival Time: 1769189520.373228725
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 112.540 microseconds]
+    [Time delta from previous displayed frame: 21.176152 milliseconds]
+    [Time since reference or first frame: 413.718313 milliseconds]
+    Frame Number: 70
+    Frame Length: 98 bytes (784 bits)
+    Capture Length: 98 bytes (784 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: eth:ethertype:ip:icmp:data]
+    Character encoding: ASCII (0)
+Ethernet II, Src: 52:55:0a:00:03:02 (52:55:0a:00:03:02), Dst: 52:54:00:12:34:58 (52:54:00:12:34:58)
+    Destination: 52:54:00:12:34:58 (52:54:00:12:34:58)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Source: 52:55:0a:00:03:02 (52:55:0a:00:03:02)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Type: IPv4 (0x0800)
+    [Stream index: 0]
+Internet Protocol Version 4, Src: 8.8.8.8, Dst: 10.0.3.15
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+        0000 00.. = Differentiated Services Codepoint: Default (0)
+        .... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+    Total Length: 84
+    Identification: 0x11b7 (4535)
+    010. .... = Flags: 0x2, Don't fragment
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    ...0 0000 0000 0000 = Fragment Offset: 0
+    Time to Live: 255
+    Protocol: ICMP (1)
+    Header Checksum: 0x4cd3 [validation disabled]
+    [Header checksum status: Unverified]
+    Source Address: 8.8.8.8
+    Destination Address: 10.0.3.15
+    [Stream index: 1]
+Internet Control Message Protocol
+    Type: Echo (ping) reply (0)
+    Code: 0
+    Checksum: 0x46f3 [correct]
+    [Checksum Status: Good]
+    Identifier (BE): 51903 (0xcabf)
+    Identifier (LE): 49098 (0xbfca)
+    Sequence Number (BE): 1 (0x0001)
+    Sequence Number (LE): 256 (0x0100)
+    [Request frame: 63]
+    [Response time: 21.176 ms]
+    ICMP Data: 90b0736900000000265f050000000000101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334353637
+        Timestamp from icmp data: Jan 23, 2026 14:32:00.352038000 -03
+        [Timestamp from icmp data (relative): 21.190725 milliseconds]
+        Data (40 bytes)
+
+0000  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0010  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0020  30 31 32 33 34 35 36 37                           01234567
+            Data: 101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334353637
+            [Length: 40]
+
+2 packets captured
+```
+
+Terminal B.
+
+```sh
+linux$ ping -R -c 1 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(124) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=255 time=21.2 ms
+
+--- 8.8.8.8 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 21.190/21.190/21.190/0.000 ms
+```
+
+### 5.3.3. Fragment Header
+
+```sh
+C:\> ping -l 3952 ff01::2
+```
+
+Set up the monitoring.
+
+Terminal A, the "not port 22" is so tshark do not record my connection from the host
+to the VM.
+
+```sh
+linux$ tshark -i any -f "not port 22" -w capture.pcap
+```
+
+Terminal B
+
+```sh
+linux$ ping -s 3952 ff01::2
+ping: connect: Invalid argument
+```
+
+    Gemini
+
+    The reason you’re getting this is that ff01::2 is a Link-Local Multicast address. 
+    Because it is "Link-Local," the Linux kernel needs to know which specific cable (interface)
+    to send it out on. It can't look at its routing table for the answer because that 
+    address is technically valid on every interface you have.
+
+So we specify one interface.
+
+```sh
+linux$ ping -s 3952 ff01::2%enp0s12
+PING ff01::2%enp0s12 (ff01::2%4) 3952 data bytes
+ping: sendmsg: Message too long
+...same message keep repeating...
+```
+
+    Gemini
+
+    Multicast Restriction: ff01::2 is a multicast address. Modern Linux kernels (and many routers)
+    have safety features that prevent fragmenting multicast packets to avoid "amplification attacks"
+    (where one fragmented packet turns into hundreds of fragments across a network)
+
+How to force it to actually see the fragmentation.
+
+```sh
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s8
+       valid_lft 85167sec preferred_lft 85167sec
+    inet6 fec0::5054:ff:fe12:3456/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86318sec preferred_lft 14318sec
+    inet6 fe80::5054:ff:fe12:3456/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 85167sec preferred_lft 85167sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 85825sec preferred_lft 13825sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:58 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123458
+    inet 10.0.3.15/24 metric 100 brd 10.0.3.255 scope global dynamic enp0s12
+       valid_lft 85167sec preferred_lft 85167sec
+    inet6 fec0::5054:ff:fe12:3458/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86304sec preferred_lft 14304sec
+    inet6 fe80::5054:ff:fe12:3458/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+```
+
+Terminal A is connected to my "secure link" enp0s11, Terminal B is connected to
+enp0s12, so we choose to send the package from enp0s12 to enp0s8
+
+```sh
+linux$ ping -6 -c 1 -s 3952 fec0::5054:ff:fe12:3456
+```
+
+And here I found out that fragmentation only happens when the packet is bigger than
+the MTU, the kernel is smart enough to send a package through loopback instead of
+the other interfaces, the MTU of loopback is "65536", now to simulate the example
+set up monitoring again and do this, where I try to ping an external address.
+
+```sh
+linux$ ping -6 -c 1 -s 3952 2001:4860:4860::8888
+```
+
+Would you look at that, it do not work, for some reason my VM refuse to connect
+to the internet using ipv6, so back to sending to loopback, just decrease the size
+of loopback MTU.
+
+```sh
+linux$ ip link set mtu 1500 dev lo
+```
+
+Try again sending to enp0s8
+
+```sh
+linux$ ping -6 -c 1 -s 3952 fec0::5054:ff:fe12:3456
+PING fec0::5054:ff:fe12:3456 (fec0::5054:ff:fe12:3456) 3952 data bytes
+3960 bytes from fec0::5054:ff:fe12:3456: icmp_seq=1 ttl=64 time=0.067 ms
+
+--- fec0::5054:ff:fe12:3456 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.067/0.067/0.067/0.000 ms
+```
+
+Later we can see what we captured.
+
+```sh
+linux$ tshark -r capture.pcap
+    1 0.000000000 fec0::5054:ff:fe12:3456 → fec0::5054:ff:fe12:3456 IPv6 1512 IPv6 fragment (off=0 more=y ident=0x39616cb8 nxt=58)
+    2 0.000009451 fec0::5054:ff:fe12:3456 → fec0::5054:ff:fe12:3456 IPv6 1512 IPv6 fragment (off=1448 more=y ident=0x39616cb8 nxt=58)
+    3 0.000018414 fec0::5054:ff:fe12:3456 → fec0::5054:ff:fe12:3456 ICMPv6, HiPerConTracer 1128 Echo (ping) request id=0x9665, seq=1, hop limit=64 (SendTTL=20, Round=21)
+    4 0.000034969 fec0::5054:ff:fe12:3456 → fec0::5054:ff:fe12:3456 IPv6 1512 IPv6 fragment (off=0 more=y ident=0x5d3ebbd2 nxt=58)
+    5 0.000037457 fec0::5054:ff:fe12:3456 → fec0::5054:ff:fe12:3456 IPv6 1512 IPv6 fragment (off=1448 more=y ident=0x5d3ebbd2 nxt=58)
+    6 0.000039795 fec0::5054:ff:fe12:3456 → fec0::5054:ff:fe12:3456 ICMPv6, HiPerConTracer 1128 Echo (ping) reply id=0x9665, seq=1, hop limit=64 (request in 3) (SendTTL=20, Round=21)
+```
+
+And to see one packet on detail.
+
+```sh
+
+linux$ tshark -r capture.pcap -V -Y "frame.number == 2"
+Frame 2: Packet, 1512 bytes on wire (12096 bits), 1512 bytes captured (12096 bits) on interface any, id 0
+    Section number: 1
+    Interface id: 0 (any)
+        Interface name: any
+    Encapsulation type: Linux cooked-mode capture v1 (25)
+    Arrival Time: Jan 30, 2026 14:55:44.253986596 -03
+    UTC Arrival Time: Jan 30, 2026 17:55:44.253986596 UTC
+    Epoch Arrival Time: 1769795744.253986596
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 9.451 microseconds]
+    [Time since reference or first frame: 9.451 microseconds]
+    Frame Number: 2
+    Frame Length: 1512 bytes (12096 bits)
+    Capture Length: 1512 bytes (12096 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: sll:ethertype:ipv6:ipv6.fraghdr:data]
+    Character encoding: ASCII (0)
+Linux cooked capture v1
+    Packet type: Unicast to us (0)
+    Link-layer address type: Loopback (772)
+    Link-layer address length: 6
+    Source: 00:00:00_00:00:00 (00:00:00:00:00:00)
+    Unused: 0000
+    Protocol: IPv6 (0x86dd)
+Internet Protocol Version 6, Src: fec0::5054:ff:fe12:3456, Dst: fec0::5054:ff:fe12:3456
+    0110 .... = Version: 6
+    .... 0000 0000 .... .... .... .... .... = Traffic Class: 0x00 (DSCP: CS0, ECN: Not-ECT)
+        .... 0000 00.. .... .... .... .... .... = Differentiated Services Codepoint: Default (0)
+        .... .... ..00 .... .... .... .... .... = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+    .... 0011 0100 0100 0000 1011 = Flow Label: 0x3440b
+    Payload Length: 1456
+    Next Header: Fragment Header for IPv6 (44)
+    Hop Limit: 64
+    Source Address: fec0::5054:ff:fe12:3456
+        [Address Space: Reserved by IETF]
+    Destination Address: fec0::5054:ff:fe12:3456
+        [Address Space: Reserved by IETF]
+    [Stream index: 0]
+    Fragment Header for IPv6
+        Next header: ICMPv6 (58)
+        Reserved octet: 0x00
+        0000 0101 1010 1... = Offset: 181 (1448 bytes)
+        .... .... .... .00. = Reserved bits: 0
+        .... .... .... ...1 = More Fragments: Yes
+        Identification: 0x39616cb8
+Data (1448 bytes)
+
+0000  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af   ................
+0010  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf   ................
+0020  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf   ................
+0030  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df   ................
+0040  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef   ................
+0050  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff   ................
+0060  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f   ................
+0070  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0080  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0090  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f   0123456789:;<=>?
+00a0  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f   @ABCDEFGHIJKLMNO
+00b0  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f   PQRSTUVWXYZ[\]^_
+00c0  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f   `abcdefghijklmno
+00d0  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f   pqrstuvwxyz{|}~.
+00e0  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f   ................
+00f0  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f   ................
+0100  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af   ................
+0110  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf   ................
+0120  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf   ................
+0130  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df   ................
+0140  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef   ................
+0150  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff   ................
+0160  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f   ................
+0170  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0180  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0190  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f   0123456789:;<=>?
+01a0  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f   @ABCDEFGHIJKLMNO
+01b0  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f   PQRSTUVWXYZ[\]^_
+01c0  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f   `abcdefghijklmno
+01d0  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f   pqrstuvwxyz{|}~.
+01e0  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f   ................
+01f0  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f   ................
+0200  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af   ................
+0210  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf   ................
+0220  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf   ................
+0230  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df   ................
+0240  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef   ................
+0250  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff   ................
+0260  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f   ................
+0270  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0280  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0290  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f   0123456789:;<=>?
+02a0  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f   @ABCDEFGHIJKLMNO
+02b0  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f   PQRSTUVWXYZ[\]^_
+02c0  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f   `abcdefghijklmno
+02d0  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f   pqrstuvwxyz{|}~.
+02e0  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f   ................
+02f0  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f   ................
+0300  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af   ................
+0310  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf   ................
+0320  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf   ................
+0330  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df   ................
+0340  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef   ................
+0350  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff   ................
+0360  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f   ................
+0370  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0380  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0390  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f   0123456789:;<=>?
+03a0  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f   @ABCDEFGHIJKLMNO
+03b0  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f   PQRSTUVWXYZ[\]^_
+03c0  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f   `abcdefghijklmno
+03d0  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f   pqrstuvwxyz{|}~.
+03e0  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f   ................
+03f0  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f   ................
+0400  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af   ................
+0410  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf   ................
+0420  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf   ................
+0430  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df   ................
+0440  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef   ................
+0450  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff   ................
+0460  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f   ................
+0470  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0480  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0490  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f   0123456789:;<=>?
+04a0  40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f   @ABCDEFGHIJKLMNO
+04b0  50 51 52 53 54 55 56 57 58 59 5a 5b 5c 5d 5e 5f   PQRSTUVWXYZ[\]^_
+04c0  60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f   `abcdefghijklmno
+04d0  70 71 72 73 74 75 76 77 78 79 7a 7b 7c 7d 7e 7f   pqrstuvwxyz{|}~.
+04e0  80 81 82 83 84 85 86 87 88 89 8a 8b 8c 8d 8e 8f   ................
+04f0  90 91 92 93 94 95 96 97 98 99 9a 9b 9c 9d 9e 9f   ................
+0500  a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 aa ab ac ad ae af   ................
+0510  b0 b1 b2 b3 b4 b5 b6 b7 b8 b9 ba bb bc bd be bf   ................
+0520  c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 ca cb cc cd ce cf   ................
+0530  d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 da db dc dd de df   ................
+0540  e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 ea eb ec ed ee ef   ................
+0550  f0 f1 f2 f3 f4 f5 f6 f7 f8 f9 fa fb fc fd fe ff   ................
+0560  00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f   ................
+0570  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f   ................
+0580  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    !"#$%&'()*+,-./
+0590  30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f   0123456789:;<=>?
+05a0  40 41 42 43 44 45 46 47                           @ABCDEFG
+    Data […]: a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101
+    [Length: 1448]
 ```

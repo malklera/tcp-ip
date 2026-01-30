@@ -34,7 +34,7 @@ AEAD Authenticated Encryption with Associated Data (algorithms that perform encr
 
 AES : Advanced Encryption Standard (current-generation U.S. encryption standard)
 
-AF Assured Forwarding (a PHB offering priority classes and prioritization within classes)
+AF : Assured Forwarding (a PHB offering priority classes and prioritization within classes)
 
 AFTR Address Family Transition Router element (in DS-Lite, a SPNAT used to share a small number of IPv4 addresses with multiple customers)
 
@@ -126,7 +126,7 @@ BU Binding Update (in MIP, establishes the mapping between a MN’s CoA and HoA)
 
 CA : Certificate Authority (organization responsible for generating and issuing public/private key pairs and signing and distributing signed public keys and CRLs)
 
-CALIPSO Common Architecture Label IPv6 Security Option (security labels for IP packets; not widely used)
+CALIPSO : Common Architecture Label IPv6 Security Option (security labels for IP packets; not widely used)
 
 CBC : Cipher Block Chaining (an encryption mode that uses the XOR operation to chain encrypted blocks together in an effort to resist re-arrangement attacks)
 
@@ -262,7 +262,7 @@ DPV Delegated Path Validation (method for delegating the entire validation proce
 
 DS Delegation Signer (in DNS, an RR used with DNSSEC to secure a delegation)
 
-DS Differentiated Services (in IP traffic management, methods to provide performance differentiation for traffic delivery)
+DS : Differentiated Services (in IP traffic management, methods to provide performance differentiation for traffic delivery)
 
 DS Distribution Service (in 802.11 LANs, the network or service used to interconnect APs, which is most often a wired 802.3/Ethernet network)
 
@@ -270,7 +270,7 @@ DSA Digital Signature Algorithm (an algorithm for generating digital signatures 
 
 DSACK Duplicate SACK (in TCP, a SACK variant that includes description of received duplicated segments)
 
-DSCP DS Code Point (field value in packet indicating a particular forwarding behavior is desired)
+DSCP : DS Code Point (field value in packet indicating a particular forwarding behavior is desired)
 
 DSL : Digital Subscriber Line (dedicated broadband data link over POTS line)
 
@@ -304,7 +304,7 @@ ECDSA Elliptic Curve Digital Signature Algorithm (a variant of DSA using ECC)
 
 ECE ECN Echo (in TCP with ECN, the reflection of ECN information to a TCP sender)
 
-ECN Explicit Congestion Notification (direct method of indicating congestion—e.g., by routers to hosts)
+ECN : Explicit Congestion Notification (direct method of indicating congestion—e.g., by routers to hosts)
 
 ECP Elliptic Curve groups modulo a Prime (groups based on elliptic curves, in the abstract algebra sense, over the Galois Field G(P) for a prime P)
 
@@ -314,7 +314,7 @@ EDCA : Enhanced Distributed Channel Access (802.11 coordinating function support
 
 EDNS0 Extension mechanisms for DNS (version 0) (a method to extend DNS RRs, version 0, needed by DNSSEC)
 
-EF Expedited Forwarding (a PHB offering a service class as if no congestion were present, generally implying it is the highest priority and requiring admission control to avoid oversubscription)
+EF : Expedited Forwarding (a PHB offering a service class as if no congestion were present, generally implying it is the highest priority and requiring admission control to avoid oversubscription)
 
 EFO Expanded Flags Option (used with DHCP, indicates presence of additional options)
 
@@ -414,7 +414,7 @@ HMAC Hash-based Message Authentication Code (a particular way of using hashing a
 
 HoA Home Address (in MIP, a MN’s address from its home network)
 
-HOPOPT IPv6 Hop-by-Hop Option (an IPv6 option type applicable to each hop in a path)
+HOPOPT : IPv6 Hop-by-Hop Option (an IPv6 option type applicable to each hop in a path)
 
 HoT Home Test (in an RR check, message sent to MN via HA resulting in MN obtaining a portion of a key used to secure BUs)
 
@@ -468,9 +468,9 @@ IETF : Internet Engineering Task Force (SDO for Internet standards)
 
 IGD, IGDDC Internet Gateway Device/Discovery and Control (a UPnP protocol for discovering and configuring gateway devices such as home NATs)
 
-IGMP Internet Group Message Protocol (a protocol to manage IPv4 multicast groups; used by routers and end hosts)
+IGMP : Internet Group Message Protocol (a protocol to manage IPv4 multicast groups; used by routers and end hosts)
 
-IHL Internet Header Length (IPv4 header field indicating the header length in 32-bit words)
+IHL : Internet Header Length (IPv4 header field indicating the header length in 32-bit words)
 
 IID : Interface Identifier (numeric identifier usually based on MAC address; used when choosing IPv6 addresses, but not used for this purpose when privacy extensions are enabled)
 
@@ -600,7 +600,7 @@ MITM : Man-in-the-Middle attack (the typical form of an MSM attack, carried out 
 
 MLD Multicast Listener Discovery (used by IPv6 routers to discover multicast receivers on a link; provides similar capabilities as IGMP for IPv4)
 
-MLPP Multilevel Precedence and Preemption (telephone scheme to prioritize calls—e.g., for military use)
+MLPP : Multilevel Precedence and Preemption (telephone scheme to prioritize calls—e.g., for military use)
 
 MMRP Multiple MAC Registration Protocol (part of MRP used for registering multicast interest)
 
@@ -762,7 +762,7 @@ PFC : Protocol Field Compression (in PPP, eliminating the Protocol field to redu
 
 PFS Perfect Forward Secrecy (in public key cryptography, the property by which compromise of one key leads at most to the compromise of data encrypted with that key and not other data or keys)
 
-PHB Per-Hop Behavior (abstract behavior at router used to implement DS)
+PHB : Per-Hop Behavior (abstract behavior at router used to implement DS)
 
 PHY : Physical (a layer in the OSI; usually describes connectors, frequencies, coding, and modulation)
 
@@ -1024,9 +1024,9 @@ TLD Top-Level Domain (a top-level domain name such as EDU, COM, UK, ZA)
 
 TLS : Transport Layer Security (based on the SSL protocol developed by Netscape)
 
-TLV Type/Length Value (used in protocols; indicates a type, length of variable-length value, and the value)
+TLV : Type/Length Value (used in protocols; indicates a type, length of variable-length value, and the value)
 
-ToS Type of Service (older name for the IPv4 header byte indicating type of service; replaced with DS Field and ECN bits)
+ToS : Type of Service (older name for the IPv4 header byte indicating type of service; replaced with DS Field and ECN bits)
 
 TS Traffic Selector (with IKE, specifications for identifying traffic such as IP address range, port number, etc.)
 
@@ -1042,7 +1042,7 @@ TSPEC : Traffic Specification (a structure indicating traffic parameters for 802
 
 TSV Timestamp Value (in TCP, portion of TSOPT used to identify the sender’s time—used in RTTM and PAWS)
 
-TTL Time-to-Live (IPv4 header field indicating number of remaining router hops allowed for a datagram)
+TTL : Time-to-Live (IPv4 header field indicating number of remaining router hops allowed for a datagram)
 
 TURN Traversal Using Relay NAT (a protocol in which a third party relays information between hosts that are otherwise unable to communicate due to the presence of one or more NATs)
 
