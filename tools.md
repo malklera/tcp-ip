@@ -65,6 +65,15 @@ For some reason it do not downloaded lua
 
 `sudo pacman -S --needed lua`
 
+This will createt a least privilege group called wireshark, we have to add the current
+user to it.
+
+`sudo usermod -aG wireshark $USER`
+
+Will probably have to reboot the system or do.
+
+`newgrp wireshark`
+
 ## whois
 
 whois searches for an object in a RFC 3912 database.
