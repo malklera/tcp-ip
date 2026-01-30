@@ -6,9 +6,7 @@ This is not a guide, this is for my future self, or for when I end up nuking the
 
 I will use [quickemu](https://github.com/quickemu-project/quickemu) to manage my **VM**
 
-
 To install quickemu I cloned the repo because of a bug on the arch package(old version)
-
 
 Install dependencies
 
@@ -41,9 +39,15 @@ The second one adds another network connection to simulate connections between
 two networks, since I will not touch the secure one, I need another.
 
 ```
-extra_args="-device virtio-net,netdev=mgmt -netdev user,id=mgmt,net=10.0.4.0/24,hostfwd=tcp::22222-:22"
-extra_args="$extra_args -device virtio-net,netdev=wifi -netdev user,id=wifi,net=10.0.3.0/24,hostfwd=tcp::22221-:22"
+extra_args="-device virtio-net,netdev=mgmt -netdev user,id=mgmt,net=10.0.4.0/24,hostfwd=tcp::22222-:22 -device virtio-net,netdev=wifi -netdev user,id=wifi,net=10.0.3.0/24,hostfwd=tcp::22221-:22"
 ```
+
+Just to keep consistency when connecting to the VM, the "secure"(as in none of
+our commands will touch this device) will be port 22222, when looking into `ip addr`
+we will not touch the device with the address 10.0.4.0/24.
+
+This way no matter what changes of configuration we made, we will have a connection
+to the VM to revert the changes or do something else.
 
 To open the **VM**
 
@@ -81,14 +85,14 @@ Secure.
 
 ```
 inet 10.0.4.15/24
-port 22221
+port 22222
 ```
 
 Create a file like this <number>-<descriptive name>.network, the number is the
 priority at which systemd will apply the configs, the descriptive name is purelly
 for he human administrator, .network is the file type.
 
-```
+```sh
 sudo vim /etc/systemd/network/10-mgmt.network
 ```
 
@@ -131,15 +135,10 @@ the one we will be using.
 **Host**
 
 ```sh
-ssh -p <vmUser>@localhost <port>
+ssh -p <port> <vmUser>@localhost
 ```
 
+<port> will be either 22222 for the secure connection or 22221 if we need another
+terminal into the VM
+
 <vmUser> is the user name from the **VM**
-
-<port> Its part of the command output from quickemu, it says something like this
-
-> - ssh:      On host:  ssh user@localhost -p <port>
-
-# Tools to use on the VM
-
-## 
