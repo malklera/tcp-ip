@@ -48,6 +48,15 @@ https://www.gnu.org/software/inetutils/
 
 `sudo pacman -S --needed inetutils`
 
+## traceroute
+
+traceroute  tracks  the  route  packets  taken from an IP network on their way to a given host. It utilizes the IP protocol's time to live (TTL) field and attempts to
+       elicit an ICMP TIME_EXCEEDED response from each gateway along the path to the host.
+
+https://traceroute.sourceforge.net/
+
+`sudo pacman -S --needed traceroute`
+
 ---
 
 # Usefull tools to have
