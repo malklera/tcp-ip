@@ -1240,8 +1240,8 @@ set up monitoring again and do this, where I try to ping an external address.
 linux$ ping -6 -c 1 -s 3952 2001:4860:4860::8888
 ```
 
-Would you look at that, it do not work, for some reason my VM refuse to connect
-to the internet using ipv6, so back to sending to loopback, just decrease the size
+Would you look at that, it do not work, turns out my ISP do not provide me with
+an IPV6 address, so back to sending to loopback, just decrease the size
 of loopback MTU.
 
 ```sh
@@ -1418,4 +1418,111 @@ Data (1448 bytes)
 05a0  40 41 42 43 44 45 46 47                           @ABCDEFG
     Data […]: a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff000102030405060708090a0b0c0d0e0f101
     [Length: 1448]
+```
+
+## 5.4. IP Forwarding
+### 5.4.3. Examples
+#### 5.4.3.2. Indirect Delivery
+
+```sh
+C:\> ping6 fe80::204:5aff:fe9f:9e80
+
+Pinging fe80::204:5aff:fe9f:9e80 with 32 bytes of data:
+
+No route to destination.
+  Specify correct scope-id or use -s to specify source address.
+```
+
+```sh
+C:\> ping6 fe80::204:5aff:fe9f:9e80%6
+
+Pinging fe80::204:5aff:fe9f:9e80%6
+from fe80::205:4eff:fe4a:24bb%6 with 32 bytes of data:
+
+Reply from fe80::204:5aff:fe9f:9e80%6: bytes=32 time=1ms
+Reply from fe80::204:5aff:fe9f:9e80%6: bytes=32 time=1ms
+Reply from fe80::204:5aff:fe9f:9e80%6: bytes=32 time=1ms
+Reply from fe80::204:5aff:fe9f:9e80%6: bytes=32 time=1ms
+
+Ping statistics for fe80::204:5aff:fe9f:9e80%6:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 1ms, Maximum = 1ms, Average = 1ms
+```
+
+For now this will stay empty, till I figure something about ipv6 on my network.
+
+```sh
+Linux% traceroute -n ftp.uu.net
+traceroute to ftp.uu.net (192.48.96.9), 30 hops max, 38 byte packets
+ 1  70.231.159.254  9.285 ms  8.404 ms  8.887 ms
+ 2  206.171.134.131  8.412 ms  8.764 ms  8.661 ms
+ 3  216.102.176.226  8.502 ms  8.995 ms  8.644 ms
+ 4  151.164.190.185  8.705 ms  8.673 ms  9.014 ms
+ 5  151.164.92.181  9.149 ms  9.057 ms  9.537 ms
+ 6  151.164.240.134  9.680 ms  10.389 ms  11.003 ms
+ 7  151.164.41.10  11.605 ms  37.699 ms  11.374 ms
+ 8  12.122.79.97  13.449 ms  12.804 ms  13.126 ms
+ 9  12.122.85.134  15.114 ms  15.020 ms  13.654 ms
+     MPLS Label=32307 CoS=5 TTL=1 S=0
+10  12.123.12.18  16.011 ms  13.555 ms  13.167 ms
+11  192.205.33.198  15.594 ms  15.497 ms  16.093 ms
+12  152.63.57.102  15.103 ms  14.769 ms  15.128 ms
+13  152.63.34.133  77.501 ms  77.593 ms  76.974 ms
+14  152.63.38.1  77.906 ms  78.101 ms  78.398 ms
+15  207.18.173.162  81.146 ms  81.281 ms  80.918 ms
+16  198.5.240.36  77.988 ms  78.007 ms  77.947 ms
+17  198.5.241.101  81.912 ms  82.231 ms  83.115 ms
+```
+
+The * on the following is because the devices at that location do not respond back,
+for security reasons servers tend to drop unsolicited UDP or ICMP traffic.
+
+```sh
+linux$ traceroute -n ftp.uu.net
+traceroute to ftp.uu.net (192.48.96.9), 30 hops max, 60 byte packets
+ 1  10.0.2.2  0.181 ms  0.155 ms  0.124 ms
+ 2  192.168.0.1  1.492 ms  1.465 ms  1.378 ms
+ 3  * * *
+ 4  * * *
+ 5  181.96.62.108  25.131 ms  21.450 ms  21.468 ms
+ 6  * * *
+ 7  * * *
+ 8  181.89.51.39  25.583 ms  18.233 ms *
+ 9  181.96.120.181  20.243 ms  18.386 ms  20.970 ms
+10  213.140.39.116  22.252 ms  22.299 ms  17.310 ms
+11  176.52.249.39  138.627 ms 176.52.255.29  47.505 ms  43.275 ms
+12  94.142.97.65  134.098 ms  134.595 ms 176.52.249.37  142.251 ms
+13  * 94.142.119.188  136.433 ms  138.556 ms
+14  65.195.233.153  138.216 ms  138.118 ms  137.708 ms
+15  140.222.7.149  157.486 ms 140.222.7.151  163.473 ms  165.767 ms
+16  207.18.173.162  165.707 ms  165.252 ms  165.693 ms
+17  198.5.240.36  158.965 ms  158.866 ms  159.101 ms
+18  * * *
+19  * * *
+20  * * *
+21  * * *
+22  * * *
+23  * * *
+24  * * *
+25  * * *
+26  * * *
+27  * * *
+28  * * *
+29  * * *
+30  * * *
+```
+
+## 5.6. Host Processing of IP Datagrams
+### 5.6.1. Host Models
+
+```sh
+C:\> netsh interface ipvX set interface <ifname> weakhostreceive=Yabled
+
+C:\> netsh interface ipvX set interface <ifname> weakhostsend=Yabled
+```
+
+```sh
+linux$ sudo sysctl -w net.ipv4.conf.<ifname>.rp_filter=0
+linux$ sudo sysctl -w net.ipv4.conf.<ifname>.arp_ignore=0
 ```

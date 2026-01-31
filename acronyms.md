@@ -96,7 +96,7 @@ BER Basic Encoding Rules (an ITU standard encoding syntax; a subset of ASN.1)
 
 BER Bit Error Rate (number of bit errors expected per number of bits in transit)
 
-BGP Border Gateway Protocol (inter-domain routing protocol with policy support)
+BGP : Border Gateway Protocol (inter-domain routing protocol with policy support)
 
 BIND9 Berkeley Internet Name Domain (version 9) (a name server software implementation popular on UNIX-like systems)
 
@@ -122,7 +122,7 @@ BSS : Basic Service Set (IEEE 802.11 terminology for an access point and associa
 
 BTNS Better Than Nothing Security (with IPsec, an option for using certificates without a full PKI but which is vulnerable to MITM attacks)
 
-BU Binding Update (in MIP, establishes the mapping between a MN’s CoA and HoA)
+BU : Binding Update (in MIP, establishes the mapping between a MN’s CoA and HoA)
 
 CA : Certificate Authority (organization responsible for generating and issuing public/private key pairs and signing and distributing signed public keys and CRLs)
 
@@ -162,17 +162,17 @@ CIDR Classless Inter-Domain Routing (a move to address the ROAD problem by remov
 
 CMAC Cipher-based Message Authentication Code (a particular way of using encryption algorithms as a MAC)
 
-CN Correspondent Node (an MN’s conversation peer in MIP scenario)
+CN : Correspondent Node (an MN’s conversation peer in MIP scenario)
 
 CNAME Canonical Name (DNS RR providing an alias for another domain name)
 
-CoA Care-of Address (MN’s address assigned while visiting non-home network)
+CoA : Care-of Address (MN’s address assigned while visiting non-home network)
 
 CoS Class of Service (general term referring to differentiated services based on different classes of traffic; a concept supported by the Diff Serv architecture)
 
-CoT Care-of Test (in a RR check, message sent to MN via its CoA resulting in MN obtaining a portion of a key used to secure BUs)
+CoT : Care-of Test (in a RR check, message sent to MN via its CoA resulting in MN obtaining a portion of a key used to secure BUs)
 
-CoTI Care-of Test Init (in a RR check, triggers receiver to send a CoT message)
+CoTI : Care-of Test Init (in a RR check, triggers receiver to send a CoT message)
 
 CP Configuration Payload (with IKE, extensible structure for conveying configuration parameters)
 
@@ -334,7 +334,7 @@ ERP EAP Re-authentication Protocol (an EAP extension to reduce the latency when 
 
 ESN Extended Sequence Number (in IPsec, an extended sequence number of 64 bits used to combat replay attacks; normal sequence numbers are 32 bits)
 
-ESP Encapsulating Security Payload (required IPsec protocol providing for authentication and/or confidentiality of traffic)
+ESP : Encapsulating Security Payload (required IPsec protocol providing for authentication and/or confidentiality of traffic)
 
 ESSID Extended Service Set Identifier (IEEE 802.11 network name)
 
@@ -398,7 +398,7 @@ gTLD Generic TLD (a TLD—such as COM, EDU, MIL—not based based on country cod
 
 GVRP Generic Attribute Registration Protocol (replaced by MRP)
 
-HA Home Agent (system offering MIP helper service to an MN)
+HA : Home Agent (system offering MIP helper service to an MN)
 
 HAIO Home Agent Information Option (in ICMPv6, an option supporting MIPv6 to indicate address of an HA)
 
@@ -412,13 +412,13 @@ HIP Host Identity Protocol (a research protocol architecture focusing on mobilit
 
 HMAC Hash-based Message Authentication Code (a particular way of using hashing algorithms as a MAC)
 
-HoA Home Address (in MIP, a MN’s address from its home network)
+HoA : Home Address (in MIP, a MN’s address from its home network)
 
 HOPOPT : IPv6 Hop-by-Hop Option (an IPv6 option type applicable to each hop in a path)
 
-HoT Home Test (in an RR check, message sent to MN via HA resulting in MN obtaining a portion of a key used to secure BUs)
+HoT : Home Test (in an RR check, message sent to MN via HA resulting in MN obtaining a portion of a key used to secure BUs)
 
-HoTI Home Test Init (in an RR check, triggers receiver to send a HoT message)
+HoTI : Home Test Init (in an RR check, triggers receiver to send a HoT message)
 
 HSPA : High-Speed Packet Access (3GPP wireless broadband standard; an evolution of WCDMA)
 
@@ -504,7 +504,7 @@ ISATAP Intra-Site Automatic Tunnel Addressing Protocol (an automatic IPv6-to-IPv
 
 ISDN Integrated Services Digital Network (combination circuit/packet switched data service)
 
-IS-IS Intermediate System to Intermediate System (ISO link-state routing protocol)
+IS-IS : Intermediate System to Intermediate System (ISO link-state routing protocol)
 
 ISL Cisco’s Inter-Switch Protocol (Cisco’s protocol for maintaining VLAN information among switches)
 
@@ -594,7 +594,7 @@ MIME Multipurpose Internet Mail Extensions (method for labeling and encoding var
 
 MIMO : Multiple Input, Multiple Output (wireless antenna scheme with multiple antennas offering performance superior to single-antenna systems but requiring more sophisticated signal processing)
 
-MIP Mobile IP (IP addressing and routing extensions to support movement of network attachment point without address change)
+MIP : Mobile IP (IP addressing and routing extensions to support movement of network attachment point without address change)
 
 MITM : Man-in-the-Middle attack (the typical form of an MSM attack, carried out by an interposer)
 
@@ -604,7 +604,7 @@ MLPP : Multilevel Precedence and Preemption (telephone scheme to prioritize call
 
 MMRP Multiple MAC Registration Protocol (part of MRP used for registering multicast interest)
 
-MN Mobile Node (the moving node in a MIP scenario)
+MN : Mobile Node (the moving node in a MIP scenario)
 
 MOBIKE Mobile version of IKE (enhancements to IKE to support mobility and change of addressing information)
 
@@ -620,7 +620,7 @@ MPDU : MAC Protocol Data Unit (name of the frame used in 802.11 standards)
 
 MPE Manchester Phase Encoding (bit encoding scheme where a voltage transition indicates one bit)
 
-MPLS Multi-Protocol Label Switching (architecture that switches frames based on tag values, not IP addresses)
+MPLS : Multi-Protocol Label Switching (architecture that switches frames based on tag values, not IP addresses)
 
 MPPC : Microsoft’s Point-to-Point Compression (used with PPP)
 
@@ -684,7 +684,7 @@ NCP : Network Control rotocol (in PPP, used to establish the network-layer proto
 
 ND, NDP Neighbor Discovery (IPv6 method to discovery and obtain MAC address of on-link neighbors; works like ARP; implemented as part of ICMPv6)
 
-NEMO Network Mobility (mobility where a router and network changes attachment point)
+NEMO : Network Mobility (mobility where a router and network changes attachment point)
 
 NIC : Network Interface Card (the device interfacing a computer with a network)
 
@@ -860,11 +860,11 @@ RH Routing Header (an IPv6 extension header that alters traffic delivery path)
 
 RHBP Rate Halving with Bounded Pacing (in TCP, an evolved version of the FACK algorithm to help spread retransmissions more evenly across an RTT period after inferred packet loss)
 
-RIP Routing Information Protocol (small organization routing protocol; the original version does not support subnet masks)
+RIP : Routing Information Protocol (small organization routing protocol; the original version does not support subnet masks)
 
 RIR Regional Internet Registry (allocates address space for some region of the world)
 
-RO Route Optimization (improving routes from indirect “dogleg” paths used in simple MIP)
+RO : Route Optimization (improving routes from indirect “dogleg” paths used in simple MIP)
 
 ROAD Running Out of Address Space (a problem motivating the creation of IPv6 and resulting in the creating of CIDR)
 
@@ -880,7 +880,7 @@ RPSL Routing Policy Specification Language (a language used to express routing p
 
 RR Resource Record (a typed information block owned by a domain name and distributed via DNS)
 
-RRP, RR Return Routability/Procedure (a check used with MIPv6 to ensure a mobile node is authentic, and includes a HoA check and CoA check)
+RRP, RR : Return Routability/Procedure (a check used with MIPv6 to ensure a mobile node is authentic, and includes a HoA check and CoA check)
 
 RRset Resource Record Set (a collection of DNS RRs with same domain name owner and class)
 
