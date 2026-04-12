@@ -1526,3 +1526,330 @@ C:\> netsh interface ipvX set interface <ifname> weakhostsend=Yabled
 linux$ sudo sysctl -w net.ipv4.conf.<ifname>.rp_filter=0
 linux$ sudo sysctl -w net.ipv4.conf.<ifname>.arp_ignore=0
 ```
+
+# 6. System Configuration: DHCP and Autoconfiguration
+## 6.2. Dynamic Host Configuration Protocol (DHCP)
+### 6.2.4. DHCP Protocol Operation
+#### 6.2.4.1. Example
+
+Had to create a fake history of previous connection to simulate the example.
+
+Terminal B
+
+```sh
+# Create a fake previous lease
+linux$ sudo bash -c 'cat <<EOF > /tmp/fake.lease
+lease {
+  interface "enp0s12";
+  fixed-address 192.168.1.50;
+  renew 2 2026/02/17 17:00:00;
+  rebind 2 2026/02/17 23:00:00;
+  expire 3 2026/02/18 05:00:00;
+}
+EOF'
+linux$ sudo ip addr flush dev enp0s12
+```
+
+Terminal A
+
+```sh
+linux$ tshark -i enp0s12 -f "udp port 67 or 68" -w dhcp_test.pcap
+Capturing on 'enp0s12'
+6
+```
+
+Terminal B
+
+```sh
+linx$ sudo dhclient -v -lf /tmp/fake.lease enp0s12
+Internet Systems Consortium DHCP Client 4.4.3-P1
+Copyright 2004-2022 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+
+Listening on LPF/enp0s12/52:54:00:12:34:58
+Sending on   LPF/enp0s12/52:54:00:12:34:58
+Sending on   Socket/fallback
+DHCPREQUEST for 192.168.1.50 on enp0s12 to 255.255.255.255 port 67
+DHCPNAK from 10.0.3.2
+DHCPDISCOVER on enp0s12 to 255.255.255.255 port 67 interval 4
+DHCPOFFER of 10.0.3.15 from 10.0.3.2
+DHCPREQUEST for 10.0.3.15 on enp0s12 to 255.255.255.255 port 67
+DHCPACK of 10.0.3.15 from 10.0.3.2
+bound to 10.0.3.15 -- renewal in 37432 seconds.
+```
+
+After that, you can read the captured packets.
+
+Terminal A
+
+```sh
+linux$ tshark -r dhcp_test.pcap
+    1 0.000000000      0.0.0.0 → 255.255.255.255 DHCP 342 DHCP Request  - Transaction ID 0x784efe3f
+    2 0.000080941     10.0.3.2 → 255.255.255.255 DHCP 590 DHCP NAK      - Transaction ID 0x784efe3f
+    3 0.010420972      0.0.0.0 → 255.255.255.255 DHCP 342 DHCP Discover - Transaction ID 0x76f68e33
+    4 0.010507642     10.0.3.2 → 255.255.255.255 DHCP 590 DHCP Offer    - Transaction ID 0x76f68e33
+    5 0.010625752      0.0.0.0 → 255.255.255.255 DHCP 342 DHCP Request  - Transaction ID 0x76f68e33
+    6 0.010686072     10.0.3.2 → 255.255.255.255 DHCP 590 DHCP ACK      - Transaction ID 0x76f68e33
+```
+
+To follow the example read the frames with.
+
+```sh
+linux$ tshark -r dhcp_test.pcap -V -Y "frame.number == 1"
+Frame 1: Packet, 342 bytes on wire (2736 bits), 342 bytes captured (2736 bits) on interface enp0s12, id 0
+    Section number: 1
+    Interface id: 0 (enp0s12)
+        Interface name: enp0s12
+    Encapsulation type: Ethernet (1)
+    Arrival Time: Feb 17, 2026 17:31:05.909878937 -03
+    UTC Arrival Time: Feb 17, 2026 20:31:05.909878937 UTC
+    Epoch Arrival Time: 1771360265.909878937
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time since reference or first frame: 0.000000000 seconds]
+    Frame Number: 1
+    Frame Length: 342 bytes (2736 bits)
+    Capture Length: 342 bytes (2736 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: eth:ethertype:ip:udp:dhcp]
+    Character encoding: ASCII (0)
+Ethernet II, Src: 52:54:00:12:34:58 (52:54:00:12:34:58), Dst: Broadcast (ff:ff:ff:ff:ff:ff)
+    Destination: Broadcast (ff:ff:ff:ff:ff:ff)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...1 .... .... .... .... = IG bit: Group address (multicast/broadcast)
+    Source: 52:54:00:12:34:58 (52:54:00:12:34:58)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Type: IPv4 (0x0800)
+    [Stream index: 0]
+Internet Protocol Version 4, Src: 0.0.0.0, Dst: 255.255.255.255
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x10 (DSCP: Unknown, ECN: Not-ECT)
+        0001 00.. = Differentiated Services Codepoint: Unknown (4)
+        .... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+    Total Length: 328
+    Identification: 0x0000 (0)
+    000. .... = Flags: 0x0
+        0... .... = Reserved bit: Not set
+        .0.. .... = Don't fragment: Not set
+        ..0. .... = More fragments: Not set
+    ...0 0000 0000 0000 = Fragment Offset: 0
+    Time to Live: 128
+    Protocol: UDP (17)
+    Header Checksum: 0x3996 [validation disabled]
+    [Header checksum status: Unverified]
+    Source Address: 0.0.0.0
+    Destination Address: 255.255.255.255
+    [Stream index: 0]
+User Datagram Protocol, Src Port: 68, Dst Port: 67
+    Source Port: 68
+    Destination Port: 67
+    Length: 308
+    Checksum: 0xff80 [unverified]
+    [Checksum Status: Unverified]
+    [Stream index: 0]
+    [Stream Packet Number: 1]
+    [Timestamps]
+        [Time since first frame: 0.000000000 seconds]
+        [Time since previous frame: 0.000000000 seconds]
+    UDP payload (300 bytes)
+Dynamic Host Configuration Protocol (Request)
+    Message type: Boot Request (1)
+    Hardware type: Ethernet (0x01)
+    Hardware address length: 6
+    Hops: 0
+    Transaction ID: 0x784efe3f
+    Seconds elapsed: 0
+    Bootp flags: 0x0000 (Unicast)
+        0... .... .... .... = Broadcast flag: Unicast
+        .000 0000 0000 0000 = Reserved flags: 0x0000
+    Client IP address: 0.0.0.0
+    Your (client) IP address: 0.0.0.0
+    Next server IP address: 0.0.0.0
+    Relay agent IP address: 0.0.0.0
+    Client MAC address: 52:54:00:12:34:58 (52:54:00:12:34:58)
+    Client hardware address padding: 00000000000000000000
+    Server host name not given
+    Boot file name not given
+    Magic cookie: DHCP
+    Option: (53) DHCP Message Type (Request)
+        Length: 1
+        DHCP: Request (3)
+    Option: (50) Requested IP Address (192.168.1.50)
+        Length: 4
+        Requested IP Address: 192.168.1.50
+    Option: (55) Parameter Request List
+        Length: 7
+        Parameter Request List Item: (1) Subnet Mask
+        Parameter Request List Item: (28) Broadcast Address
+        Parameter Request List Item: (2) Time Offset
+        Parameter Request List Item: (3) Router
+        Parameter Request List Item: (15) Domain Name
+        Parameter Request List Item: (6) Domain Name Server
+        Parameter Request List Item: (12) Host Name
+    Option: (255) End
+        Option End: 255
+    Padding: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000
+```
+
+This commands are up to date.
+
+```sh
+Linux% dhclient -r
+Linux% dhclient
+```
+
+```sh
+C:\> ipconfig /all
+...
+Wireless LAN adapter Wireless Network Connection:
+
+   Connection-specific DNS Suffix  . : home
+   Description . . . . . . . . . . . : Intel(R) PRO/Wireless 3945ABG
+                                       Network Connection
+   Physical Address. . . . . . . . . : 00-13-02-20-B9-18
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 10.0.0.57(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.128
+   Lease Obtained. . . . . . . . . . : Sunday, December 21, 2008
+                                       11:31:48 PM
+   Lease Expires . . . . . . . . . . : Monday, December 22, 2008
+                                       11:31:40 AM
+   Default Gateway . . . . . . . . . : 10.0.0.1
+   DHCP Server . . . . . . . . . . . : 10.0.0.1
+   DNS Servers . . . . . . . . . . . : 10.0.0.1
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+   Connection-specific DNS Suffix Search List :home
+```
+
+There is no one command equivalent to that, but you can get all the information.
+
+```sh
+linux$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123456
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s8
+       valid_lft 85242sec preferred_lft 85242sec
+    inet6 fec0::5054:ff:fe12:3456/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86342sec preferred_lft 14342sec
+    inet6 fe80::5054:ff:fe12:3456/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+3: enp0s11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123457
+    inet 10.0.4.15/24 metric 1024 brd 10.0.4.255 scope global dynamic enp0s11
+       valid_lft 85242sec preferred_lft 85242sec
+    inet6 fec0::5054:ff:fe12:3457/64 scope site dynamic mngtmpaddr noprefixroute
+       valid_lft 86315sec preferred_lft 14315sec
+    inet6 fe80::5054:ff:fe12:3457/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+4: enp0s12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:12:34:58 brd ff:ff:ff:ff:ff:ff
+    altname enx525400123458
+    inet 10.0.3.15/24 metric 100 brd 10.0.3.255 scope global dynamic enp0s12
+       valid_lft 85242sec preferred_lft 85242sec
+
+linux$ ip route
+default via 10.0.3.2 dev enp0s12 proto dhcp src 10.0.3.15 metric 100
+default via 10.0.2.2 dev enp0s8 proto dhcp src 10.0.2.15 metric 100
+10.0.2.0/24 dev enp0s8 proto kernel scope link src 10.0.2.15 metric 100
+10.0.2.2 dev enp0s8 proto dhcp scope link src 10.0.2.15 metric 100
+10.0.2.3 dev enp0s8 proto dhcp scope link src 10.0.2.15 metric 100
+10.0.3.0/24 dev enp0s12 proto kernel scope link src 10.0.3.15 metric 100
+10.0.3.2 dev enp0s12 proto dhcp scope link src 10.0.3.15 metric 100
+10.0.3.3 dev enp0s12 proto dhcp scope link src 10.0.3.15 metric 100
+10.0.4.0/24 dev enp0s11 proto kernel scope link src 10.0.4.15 metric 1024
+10.0.4.3 dev enp0s11 proto dhcp scope link src 10.0.4.15 metric 1024
+
+linux$ resolvectl
+Global
+           Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+    resolv.conf mode: foreign
+  Current DNS Server: 10.0.3.3
+         DNS Servers: 10.0.3.3
+Fallback DNS Servers: 9.9.9.9#dns.quad9.net 2620:fe::9#dns.quad9.net 1.1.1.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 8.8.8.8#dns.google
+                      2001:4860:4860::8888#dns.google
+
+Link 2 (enp0s8)
+    Current Scopes: DNS LLMNR/IPv4 LLMNR/IPv6 mDNS/IPv4 mDNS/IPv6
+         Protocols: +DefaultRoute +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+       DNS Servers: 10.0.2.3 fec0::3
+     Default Route: yes
+
+Link 3 (enp0s11)
+    Current Scopes: DNS LLMNR/IPv4 LLMNR/IPv6
+         Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+       DNS Servers: 10.0.4.3 fec0::3
+     Default Route: yes
+
+Link 4 (enp0s12)
+    Current Scopes: DNS LLMNR/IPv4 mDNS/IPv4
+         Protocols: +DefaultRoute +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+       DNS Servers: 10.0.3.3
+     Default Route: yes
+
+linux$ networkctl status
+● Interfaces: 1, 2, 3, 4
+       State: routable
+Online state: online
+     Address: 10.0.2.15 on enp0s8
+              10.0.4.15 on enp0s11
+              10.0.3.15 on enp0s12
+              fec0::5054:ff:fe12:3456 on enp0s8
+              fec0::5054:ff:fe12:3457 on enp0s11
+              fe80::5054:ff:fe12:3456 on enp0s8
+              fe80::5054:ff:fe12:3457 on enp0s11
+     Gateway: 10.0.2.2 on enp0s8
+              10.0.3.2 on enp0s12
+              fe80::2 on enp0s8
+              fe80::2 on enp0s11
+         DNS: 10.0.4.3
+              fec0::3
+              10.0.3.3
+              10.0.2.3
+
+# And for more details.
+linux$ networkctl status enp0s8
+● 2: enp0s8
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /etc/systemd/network/20-ethernet.network
+                       State: routable (configured)
+                Online state: online
+                        Type: ether
+                        Path: pci-0000:00:08.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio network device
+           Alternative Names: enx525400123456
+            Hardware Address: 52:54:00:12:34:56
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: fq_codel
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 1/1
+            Auto negotiation: no
+                     Address: 10.0.2.15 (DHCPv4 via 10.0.2.2)
+                              fec0::5054:ff:fe12:3456
+                              fe80::5054:ff:fe12:3456
+                     Gateway: 10.0.2.2
+                              fe80::2
+                         DNS: 10.0.2.3
+                              fec0::3
+           Activation Policy: up
+         Required For Online: yes
+            DHCPv4 Client ID: IAID:0xaf818f7d/DUID
+          DHCPv6 Client DUID: DUID-EN/Vendor:0000ab111710402d354c7ce7
+```
+
+networkctl may print a log after what is show here, I discard it for brevity.
+
+

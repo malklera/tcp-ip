@@ -20,7 +20,7 @@ AC Attribute Certificate (a type of certificate used to carry attributes such as
 
 ACCM : Asynchronous Control Character Map (in PPP, indicates which bytes need to be escaped to avoid having unwanted effects)
 
-ACD Automatic Collision Detection (procedure to detect and avoid IP address assignment collisions)
+ACD : Automatic Collision Detection (procedure to detect and avoid IP address assignment collisions)
 
 ACFC : Address and Control Field Compression (in PPP, eliminating the address and control fields to reduce overhead)
 
@@ -90,7 +90,7 @@ BACP :Bandwidth Allocation Control Protocol (with PPP, a protocol for configurin
 
 BAP : Bandwidth Allocation Protocol (a protocol used to configure links in a bundle for MPPP)
 
-BCMCS Broadcast and Multicast Service Controller (in cellular networks, manages multicast)
+BCMCS : Broadcast and Multicast Service Controller (in cellular networks, manages multicast)
 
 BER Basic Encoding Rules (an ITU standard encoding syntax; a subset of ASN.1)
 
@@ -108,15 +108,15 @@ BL Bulk Leasequery (in DHCP, a request/response protocol to convey current lease
 
 BoD : Bandwidth on Demand (ability to dynamically adjust available link bandwidth)
 
-BOOTP Bootstrap Protocol (precursor to DHCP; used to configure hosts)
+BOOTP : Bootstrap Protocol (precursor to DHCP; used to configure hosts)
 
 BPDU Bridge PDU (PDUs used by STP; exchanged by switches and bridges)
 
 BPSK : Binary Phase Shift Keying (modulating binary using two signal phases)
 
-BSD Berkeley Software Distribution (UC Berkeley’s version of UNIX, included the first widely used implementation of TCP/IP)
+BSD : Berkeley Software Distribution (UC Berkeley’s version of UNIX, included the first widely used implementation of TCP/IP)
 
-BSDP Boot Server Discovery Protocol (an extension to DHCP developed by Apple to discover a boot image server)
+BSDP : Boot Server Discovery Protocol (an extension to DHCP developed by Apple to discover a boot image server)
 
 BSS : Basic Service Set (IEEE 802.11 terminology for an access point and associated stations)
 
@@ -226,7 +226,7 @@ DF Don’t Fragment (an IPv4 header bit indicating no fragmentation should be pe
 
 DH Diffie-Hellman (mathematical protocol to establish a secret value between two parties even in the presence of an evesdropper)
 
-DHCP Dynamic Host Configuration Protocol (evolved from BOOTP; sets up systems with configuration information such as leased IP addresses, default router, and DNS server IP address)
+DHCP : Dynamic Host Configuration Protocol (evolved from BOOTP; sets up systems with configuration information such as leased IP addresses, default router, and DNS server IP address)
 
 DIFS : DCF Inter-Frame Space (time between frames under 802.11 DCF)
 
@@ -238,11 +238,11 @@ DLNA Digital Living Network Alliance (an industry group focused on interoperabil
 
 DMZ De-Militarized Zone (a network segment outside an organization’s inside firewall, usually used for hosts providing services to customers or the public)
 
-DNA Detecting Network Attachment (procedures to detect a change in connection state)
+DNA : Detecting Network Attachment (procedures to detect a change in connection state)
 
 DNAME Non-Terminal Name Redirection (DNS RR supporting generation of multiple CNAME records using a DNS subtree aliasing mechanism)
 
-DNS Domain Name System (maps names to IP addresses and more)
+DNS : Domain Name System (maps names to IP addresses and more)
 
 DNS64 DNS IPv4/IPv6 translation (a mechanism for IPv4/IPv6 coexistence to translate IPv4 DNS information for IPv6 DNS use)
 
@@ -442,7 +442,7 @@ IAB Internet Architecture Board (one of IETF’s governing bodies; responsible f
 
 IAID IA Identifier (in DHCP, an ID referring to a particular IA)
 
-IANA Internet Assigned Numbers Authority (maintains protocol numbers and field values)
+IANA : Internet Assigned Numbers Authority (maintains protocol numbers and field values)
 
 IBSS Independent Basic Service Set (802.11 ad-hoc network)
 
@@ -658,7 +658,7 @@ NAC Network Access Control (process employed to determine whether a device shoul
 
 NACK : Negative Acknowledgment (an indication of non-receipt or non-acceptance)
 
-NAP Network Access Protection (Microsoft’s variant of NAC; first available with Windows Server 2008)
+NAP : Network Access Protection (Microsoft’s variant of NAC; first available with Windows Server 2008)
 
 NAPT NAT with Port Translation (NAT with port re-writing, the most common form of NAT)
 
@@ -738,7 +738,7 @@ PaC PANA Client (PANA agent requesting authentication)
 
 PAD Peer Authentication Database (with IPsec, abstraction of database containing authentication information for each peer such as use of IKE or PSK and associated authentication data)
 
-PANA Protocol for Carrying Authentication for Network Access (UDP/IP carrier for EAP)
+PANA : Protocol for Carrying Authentication for Network Access (UDP/IP carrier for EAP)
 
 PAP : Password Authentication Protocol (protocol that carries cleartext password; vulnerable to MITM or eavesdroppers)
 

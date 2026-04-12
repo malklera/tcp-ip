@@ -2,7 +2,7 @@
 
 ## ssh
 
-Mandatory to have, allows for secure connection between devices
+Mandatory to have, allows for secure connection between devices.
 
 https://www.openssh.org/
 
@@ -10,7 +10,7 @@ https://www.openssh.org/
 
 ## ip
 
-ip - show / manipulate routing, network devices, interfaces and tunnels
+ip - show / manipulate routing, network devices, interfaces and tunnels.
 
 https://git.kernel.org/pub/scm/network/iproute2/iproute2.git
 
@@ -18,7 +18,8 @@ https://git.kernel.org/pub/scm/network/iproute2/iproute2.git
 
 ## ethtool
 
-ethtool is the standard Linux utility for controlling network drivers and hardware, particularly for wired Ethernet devices
+ethtool is the standard Linux utility for controlling network drivers and hardware, 
+particularly for wired Ethernet devices.
 
 https://www.kernel.org/pub/software/network/ethtool/
 
@@ -34,7 +35,7 @@ http://ahh.sourceforge.net/wol/
 
 ## iw
 
-iw - show / manipulate wireless devices and their configuration
+iw - show / manipulate wireless devices and their configuration.
 
 https://wireless.docs.kernel.org/en/latest/en/users/documentation/iw.html
 
@@ -42,7 +43,7 @@ https://wireless.docs.kernel.org/en/latest/en/users/documentation/iw.html
 
 ## telnet
 
-Login to remote system HOST (optionally, on service port PORT
+Login to remote system HOST (optionally, on service port PORT.
 
 https://www.gnu.org/software/inetutils/
 
@@ -50,8 +51,9 @@ https://www.gnu.org/software/inetutils/
 
 ## traceroute
 
-traceroute  tracks  the  route  packets  taken from an IP network on their way to a given host. It utilizes the IP protocol's time to live (TTL) field and attempts to
-       elicit an ICMP TIME_EXCEEDED response from each gateway along the path to the host.
+traceroute  tracks  the  route  packets  taken from an IP network on their way 
+to a given host. It utilizes the IP protocol's time to live (TTL) field and attempts to 
+elicit an ICMP TIME_EXCEEDED response from each gateway along the path to the host.
 
 https://traceroute.sourceforge.net/
 
@@ -63,8 +65,9 @@ https://traceroute.sourceforge.net/
 
 ## tshark
 
-TShark is a network protocol analyzer. It lets you capture packet data from a live network, or read packets from a previously saved capture file, either printing a
-decoded form of those packets to the standard output or writing the packets to a file.
+TShark is a network protocol analyzer. It lets you capture packet data from a live network, 
+or read packets from a previously saved capture file, either printing a decoded 
+form of those packets to the standard output or writing the packets to a file.
 
 https://www.wireshark.org/
 
@@ -87,8 +90,9 @@ Will probably have to reboot the system or do.
 
 whois searches for an object in a RFC 3912 database.
 
-This version of the whois client tries to guess the right server to ask for the specified object.  If no guess can be  made  it  will  connect  to  whois.networksolu‐
-tions.com for NIC handles or whois.arin.net for IPv4 addresses and network names
+This version of the whois client tries to guess the right server to ask for the specified object.
+If no guess can be  made  it  will  connect  to  whois.networksolutions.com for 
+NIC handles or whois.arin.net for IPv4 addresses and network names.
 
 https://github.com/rfc1036/whois
 
@@ -106,4 +110,10 @@ https://www.isc.org/bind/
 
 `sudo pacman -S --needed bind`
 
-## 
+## dhclient
+
+The Internet Systems Consortium DHCP Client, dhclient, provides a means for configuring 
+one or more network interfaces using the Dynamic Host Configuration Protocol,
+BOOTP protocol, or if these protocols fail, by statically assigning an address. 
+
+`sudo pacman -S --needed dhclient`
