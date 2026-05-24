@@ -4,7 +4,7 @@
 
 I used [quickemu](https://github.com/quickemu-project/quickemu) to set up my VMs,
 but it may have been easer to use [qemu](https://www.qemu.org) directly for the
-dependencies problems I have to dealt with, but I disgress.
+dependencies problems I have to dealt with, but I digress.
 
 - Install [qemu].
 - Install [quickemu], I have a problem with the package being an old version, so I have to build it from source.
@@ -13,7 +13,7 @@ dependencies problems I have to dealt with, but I disgress.
 **System where the new commands where used**
 I created two VMs with quickemu
 
-For linux system I choose a minimal archlinux install
+For Linux system I choose a minimal archlinux install
 
 ```sh
 linux$ uname -a
@@ -63,10 +63,10 @@ linux$ ip address
     inet6 hhhh::hhhh:hh:hhhh:hhhh/64 scope link proto kernel_ll
        valid_lft forever preferred_lft forever
 ```
-1: lo: is for loopback, I suposse someday I will learn what is for, for now, ignore that
+1: lo: is for loopback, I suppose someday I will learn what is for, for now, ignore that
 
-2: : is my actual ethernet connection
- is autogenerate following the [pnidn](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/networking_guide/sec-understanding_the_predictable_network_interface_device_names) standart? it is compose by
+2: : is my actual Ethernet connection
+ is auto generated following the [pnidn](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/networking_guide/sec-understanding_the_predictable_network_interface_device_names) standard? It is compose by
 
 type_interface p\<Bus number\>s\<Slot number\> => enp0s9 
 
@@ -1852,4 +1852,42 @@ IPv6 Address Generation Mode: eui64
 
 networkctl may print a log after what is show here, I discard it for brevity.
 
+### 6.2.5. DHCPv6
+#### 6.2.5.6. Extended Example
 
+Cannot test, need for IPv6, maybe in the future.
+
+## 6.3. Stateless Address Autoconfiguration (SLAAC)
+### 6.3.2. IPv6 SLAAC for Link-Local Addresses
+#### 6.3.2.3. Example
+
+Cannot test, need for IPv6, maybe in the future.
+
+#### 6.3.2.5. The Utility of Address Autoconfiguration
+
+`/etc/sysconfig/network`
+
+This depend of which distro you are using.
+
+First you have to check what process is controlling you network, they can be systemd-networkd,
+NetworkManager, etc.
+
+The Archlinux Wiki has a list of [Network managers](https://wiki.archlinux.org/title/Network_configuration#Network_managers)
+then is a matter of checking what is running, and where their configuration lives,
+they have different methods of disabling APIPA.
+
+In our machine with have systemd-networkd managing the network.
+
+```sh
+linux$ systemctl status | grep network
+           │ ├─systemd-networkd.service
+           │ │ └─292 /usr/lib/systemd/systemd-networkd
+               │ └─503 grep --color=auto network
+```
+
+Acording to `man systemd.network` the option to disable APIPA is called `LinkLocalAddressing`
+in our config we can add it like this.
+
+```sh
+
+```

@@ -52,7 +52,7 @@ A-MPDU : Aggregated MPDU (frame containing multiple MPDUs, part of IEEE 802.11n)
 
 A-MSDU : Aggregated MSDU (frame containing multiple MSDUs, part of IEEE 802.11n)
 
-ANDSF Access Network Discovery and Selection Function (a portion of MoS indicating information about networks that may be used to influence handoff and network selection)
+ANDSF : Access Network Discovery and Selection Function (a portion of MoS indicating information about networks that may be used to influence handoff and network selection)
 
 AODV : Ad-hoc On-Demand Distance Vector routing protocol (early ad-hoc on-demand routing protocol using distance vectors)
 
@@ -60,7 +60,7 @@ AP : Access Point (802.11 STA usually used to interconnect wireless and wired ne
 
 API Application Programming Interface (functions invoked by applications to obtain effects such as sending and receiving network traffic)
 
-APIPA Automatic Private IP Addressing (a mechanism whereby a node self-configures its own IP address from a particular range; usually applies to IPv4 nodes)
+APIPA : Automatic Private IP Addressing (a mechanism whereby a node self-configures its own IP address from a particular range; usually applies to IPv4 nodes)
 
 APSD : Automatic Power Save Delivery (periodic batch processing of 802.11 frames in support of PSM)
 
@@ -104,7 +104,7 @@ BITS Bump In the Stack (option for implementing IPsec in the host)
 
 BITW Bump In the Wire (option for implementing IPsec in the network)
 
-BL Bulk Leasequery (in DHCP, a request/response protocol to convey current lease information)
+BL : Bulk Leasequery (in DHCP, a request/response protocol to convey current lease information)
 
 BoD : Bandwidth on Demand (ability to dynamically adjust available link bandwidth)
 
@@ -208,7 +208,7 @@ CWR Congestion Window Reducing (or Reduced) (in TCP, reduction of the sender’s
 
 CWV Congestion Window Verification (in TCP, a method to check and update the current value of CWND when deemed necessary)
 
-DAD Duplicate Address Detection (with IPv6 ND and SLAAC, DAD helps determine whether a candidate IPv6 address is already in use by sending an NS message for the proposed address)
+DAD : Duplicate Address Detection (with IPv6 ND and SLAAC, DAD helps determine whether a candidate IPv6 address is already in use by sending an NS message for the proposed address)
 
 DCCP Datagram Congestion Control Protocol (a protocol that provides best-effort datagram service to applications and also controls congestion)
 
@@ -284,7 +284,7 @@ DSUSRK Domain-Specific USRK (a key combining the usage policies of a USRK and DS
 
 DTLS Datagram TLS (variant of TLS used with datagram protocols such as UDP)
 
-DUID DHCP Unique Identifier (value placed in DHCP request to match responses)
+DUID : DHCP Unique Identifier (value placed in DHCP request to match responses)
 
 DUP Duplicate (used in multiple context—e.g., DUP ACKs)
 
@@ -358,7 +358,7 @@ FIN Finish (a TCP header bit and last segment type sent on a TCP connection)
 
 FMIP Mobile IP with Fast Handovers (modification to MIPv6 with early handovers)
 
-FQDN Fully Qualifies Domain Name (a domain name with full domain extension included)
+FQDN : Fully Qualifies Domain Name (a domain name with full domain extension included)
 
 F-RTO Forward RTO (in TCP, a method to infer whether a retransmission was spurious and if so facilitate the avoidance of unnecessary retransmissions)
 
@@ -406,7 +406,7 @@ HCF : Hybrid Coordination Function (coordinating function supporting both priori
 
 HDLC : High-level Data Link Control (a popular ISO standard data link protocol, the basis for the most popular variant of PPP)
 
-HELD HTTP-Enabled Location Delivery (a protocol for delivering LCI using HTTP/TCP/IP)
+HELD : HTTP-Enabled Location Delivery (a protocol for delivering LCI using HTTP/TCP/IP)
 
 HIP Host Identity Protocol (a research protocol architecture focusing on mobility and security)
 
@@ -436,11 +436,11 @@ HTTPS : HTTP over SSL/TLS (standard for secure WWW exchange)
 
 HWRP : Hybrid Wireless Routing Protocol (routing protocol proposed for IEEE 802.11s)
 
-IA Identity Association (in DHCP, a collection of addresses)
+IA : Identity Association (in DHCP, a collection of addresses)
 
 IAB Internet Architecture Board (one of IETF’s governing bodies; responsible for architectural oversight and apppointment of liasons to other SDOs)
 
-IAID IA Identifier (in DHCP, an ID referring to a particular IA)
+IAID : IA Identifier (in DHCP, an ID referring to a particular IA)
 
 IANA : Internet Assigned Numbers Authority (maintains protocol numbers and field values)
 
@@ -540,7 +540,7 @@ LAN : Local Area Network (a network within a small geographic area such as a sin
 
 LCG Linear Congruential Generator (a deterministic type of popular PRNG, which is not a CSPRNG)
 
-LCI Location Configuration Information (data representing the location—geographical or civic—of a system)
+LCI : Location Configuration Information (data representing the location—geographical or civic—of a system)
 
 LCI Logical Channel Identifier (in circuit switching, identifier for a virtual channel)
 
@@ -550,7 +550,7 @@ LCP : Link Control Protocol (in PPP, used to establish a link)
 
 LDAP Lightweight Directory Access Protocol (a lookup protocol based on the ISO X.500 DAP protocol)
 
-LDRA Lightweight DHCP Relay Agent (mechanisms to allow layer 2 devices to act as DHCP relay agents)
+LDRA : Lightweight DHCP Relay Agent (mechanisms to allow layer 2 devices to act as DHCP relay agents)
 
 LEAP Lightweight Extensible Authentication Protocol (Cisco’s EAP method using WEP or TKIP keys; now known to have vulnerabilities)
 
@@ -566,7 +566,7 @@ LMQT Last Member Query Time (in IGMP and MLD, the total spent after sending a la
 
 LNP Local Network Protection (a collection of techniques suggested for use in IPv6 deployments making NATs unnecessary)
 
-LoST Location-to-Service Translation (a framework for offering services based on location—e.g., indication of the nearest hospital)
+LoST : Location-to-Service Translation (a framework for offering services based on location—e.g., indication of the nearest hospital)
 
 LQR : Link Quality Reports (in PPP, reports of link quality measurements including number of packets received, sent, and rejected due to errors)
 
@@ -586,7 +586,7 @@ MD Message Digest Algorithms (mathematical functions giving a short numeric “f
 
 mDNS Multicast DNS (local variant of name service developed by Apple)
 
-MIH Media-Independent Handoff (mechanisms to support change of network attachment point between heterogeneous networks; the IEEE 802.21 standard covers MIH for 802.3, 802.11, 802.15, 802.16, 3GPP, and 3GPP2 network types)
+MIH : Media-Independent Handoff (mechanisms to support change of network attachment point between heterogeneous networks; the IEEE 802.21 standard covers MIH for 802.3, 802.11, 802.15, 802.16, 3GPP, and 3GPP2 network types)
 
 MII Media-Independent Interface (in hardware, the interface between the MAC implementation and PHY protocol implementation, which is PHY-independent)
 
@@ -598,7 +598,7 @@ MIP : Mobile IP (IP addressing and routing extensions to support movement of net
 
 MITM : Man-in-the-Middle attack (the typical form of an MSM attack, carried out by an interposer)
 
-MLD Multicast Listener Discovery (used by IPv6 routers to discover multicast receivers on a link; provides similar capabilities as IGMP for IPv4)
+MLD : Multicast Listener Discovery (used by IPv6 routers to discover multicast receivers on a link; provides similar capabilities as IGMP for IPv4)
 
 MLPP : Multilevel Precedence and Preemption (telephone scheme to prioritize calls—e.g., for military use)
 
@@ -610,7 +610,7 @@ MOBIKE Mobile version of IKE (enhancements to IKE to support mobility and change
 
 MODP Modulo-P groups (groups based on modular arithmetic, in the abstract algebraic sense, used with key establishment protocols)
 
-MoS Mobility Services (portion of the IEEE 802.21 standard supporting media-independent handoff services)
+MoS : Mobility Services (portion of the IEEE 802.21 standard supporting media-independent handoff services)
 
 MP : Mesh Point (name of a node in IEEE 802.11s operating in a mesh configuration)
 
@@ -716,13 +716,13 @@ OCSP Online Certificate Status Protocol (a protocol for checking the validity of
 
 OFDM : Orthogonal Frequency Division Multiplexing (a sophisticated modulation scheme in which subcarriers of multiple frequences are simultaneously modulated in a specified bandwidth to achieve high throughput; used by DSL, 802.11a/g/n, 802.16e, and advanced cellular data standards including LTE)
 
-OID Object Identifier (numeric identifier of a digital object; used in certificate encodings)
+OID : Object Identifier (numeric identifier of a digital object; used in certificate encodings)
 
 OLSR : Optimized Link State Routing (a standard protocol for on-demand routing in ad-hoc networks)
 
 OOB Out Of Band (information delivered outside a primary communication channel)
 
-ORO Option Request Option (in DHCP, an option indicating a systems interest in knowing which options are supported)
+ORO : Option Request Option (in DHCP, an option indicating a systems interest in knowing which options are supported)
 
 OSI : Open System Interconnect (an abstract reference model specified by ISO for open systems that helped form the basis of layered design in protocols)
 
@@ -756,7 +756,7 @@ PDU : Protocol Data Unit (describes a message at some protocol layer; sometimes 
 
 PEAP Protected Extensible Authentication Protocol (a popular method to encapsulate EAP in TLS; similar to EAP-TTLS)
 
-PEN Private Enterprise Number (numbers assigned by IANA usable by an enterprise in forming OIDs)
+PEN : Private Enterprise Number (numbers assigned by IANA usable by an enterprise in forming OIDs)
 
 PFC : Protocol Field Compression (in PPP, eliminating the Protocol field to reduce overhead)
 
@@ -832,11 +832,11 @@ QS Quick Start (in TCP, an experimental modification for faster startup behavior
 
 QSTA : QoS STA (an 802.11 STA supporting QoS capabilities)
 
-RA Router Advertisement (message indicating presence of an on-link router neighbor; uses ICMP)
+RA : Router Advertisement (message indicating presence of an on-link router neighbor; uses ICMP)
 
 RADIUS : Remote Authentication Dial-In User Service protocol (a popular protocol for carrying AAA data)
 
-RAIO Relay Agent Information Option (in DHCPv6, an option used by relays to insert various bits of information)
+RAIO : Relay Agent Information Option (in DHCPv6, an option used by relays to insert various bits of information)
 
 RARP : Reverse ARP (protocol providing network layer to MAC layer address mappings)
 
@@ -886,7 +886,7 @@ RRset Resource Record Set (a collection of DNS RRs with same domain name owner a
 
 RRSIG Resource Record Signature (DNS RR used with DNSSEC holding a signature on an RRset)
 
-RS Router Solicitation (an ICMP message that induces a router to produce a response)
+RS : Router Solicitation (an ICMP message that induces a router to produce a response)
 
 RSA Rabin, Shamir, Adelman (the most popular public key cryptography algorithm)
 
@@ -952,9 +952,9 @@ SIIT Stateless IP/ICMP Translation (a framework for translation between IPv4 and
 
 SIP : Session Initiation Protocol (general signaling protocol; used with VoIP)
 
-SLAAC Stateless Address Autoconfiguration (a mechanism whereby a node self-configures its own IP address; usually applies to IPv6 nodes)
+SLAAC : Stateless Address Autoconfiguration (a mechanism whereby a node self-configures its own IP address; usually applies to IPv6 nodes)
 
-SLLAO Source Link-Layer Address Option (in ICMPv6, an option carrying the sender’s link layer address)
+SLLAO : Source Link-Layer Address Option (in ICMPv6, an option carrying the sender’s link layer address)
 
 SMSS Sender’s MSS (the MSS for a connection as viewed by the sender)
 
@@ -966,7 +966,7 @@ SNAP Subnetwork Access Protocol (IEEE terminology for 802.2 encapsulation; rare 
 
 S-NAPTR Straightforward NAPTR (simplified NAPTR where AUS maps directly to result without regular expression substitution)
 
-SNMP Simple Network Management Protocol (status reporting and configuration settings for network equipment; usually used with UDP/IP)
+SNMP : Simple Network Management Protocol (status reporting and configuration settings for network equipment; usually used with UDP/IP)
 
 SOA Start of Authority (DNS RR indicating meta-data about a zone)
 
